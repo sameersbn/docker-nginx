@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# configure nginx
+cat > /etc/supervisor/conf.d/nginx.conf <<EOF
+[program:nginx]
+priority=20
+directory=/tmp
+command=/usr/sbin/nginx
+user=root
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/supervisor/%(program_name)s.log
+stderr_logfile=/var/log/supervisor/%(program_name)s.log
+EOF
+
+# configure php5-fpm
+sed 's/;daemonize = yes/daemonize = no/' -i /etc/php5/fpm/php-fpm.conf
+cat > /etc/supervisor/conf.d/php5-fpm.conf <<EOF
+[program:php5-fpm]
+priority=20
+directory=/tmp
+command=/usr/sbin/php5-fpm
+user=nginx
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/supervisor/%(program_name)s.log
+stderr_logfile=/var/log/supervisor/%(program_name)s.log
+EOF
