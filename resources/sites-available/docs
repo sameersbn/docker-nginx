@@ -1,0 +1,19 @@
+server {
+	root /usr/share/nginx/www/docs;
+	index index.php index.html index.htm;
+
+	server_name docs.sameersbn.local;
+
+	location / {
+		autoindex on;
+		try_files $uri $uri/ /index.html;
+	}
+
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+}
+
