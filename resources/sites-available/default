@@ -2,18 +2,11 @@ server {
 	root /usr/share/nginx/www;
 	index index.php index.html index.htm;
 
-	server_name localhost;
+	server_name sameersbn.local;
 
 	location / {
 		autoindex on;
 		try_files $uri $uri/ /index.html;
-	}
-
-	location /doc/ {
-		alias /usr/share/doc/;
-		autoindex on;
-		allow 127.0.0.1;
-		deny all;
 	}
 
 	location ~ \.php$ {
