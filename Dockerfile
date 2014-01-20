@@ -18,8 +18,9 @@ RUN apt-get install -y nginx php5-common php5-cli php5-fpm
 ADD resources/ /nginx-php/
 RUN chmod 755 /nginx-php/setup/install && /nginx-php/setup/install
 
+ADD authorized_keys /root/.ssh/
 RUN mv /nginx-php/.vimrc /nginx-php/.bash_aliases /root/
-RUN chown root:root -R /root
+RUN chmod 700 /root/.ssh && chmod 600 /root/.ssh/authorized_keys && chown root:root -R /root
 
 EXPOSE 80
 EXPOSE 443
