@@ -4,11 +4,22 @@ MAINTAINER sameer@damagehead.com
 RUN sed 's/main$/main universe/' -i /etc/apt/sources.list
 RUN apt-get update && apt-get upgrade -y && apt-get clean # 20130925
 
-RUN apt-get install -y vim nginx php5-common php5-cli php5-fpm supervisor
+# essentials
+RUN apt-get install -y vim curl wget sudo net-tools && \
+	apt-get install -y logrotate supervisor openssh-server && \
+	apt-get clean
+
+# build tools
+# RUN apt-get install -y gcc make && apt-get clean
+
+# image specific
+RUN apt-get install -y nginx php5-common php5-cli php5-fpm
 
 ADD resources/ /nginx-php/
 RUN chmod 755 /nginx-php/setup/install && /nginx-php/setup/install
 
+RUN mv /nginx-php/.vimrc /nginx-php/.bash_aliases /root/
+RUN chown root:root -R /root
 
 EXPOSE 80
 EXPOSE 443
