@@ -1,5 +1,10 @@
 #!/bin/bash
 
+rm -rf /etc/nginx/sites-available /etc/nginx/sites-enabled
+mv /nginx-php/setup/sites-available /etc/nginx/
+mv /nginx-php/setup/sites-enabled /etc/nginx/
+mv /nginx-php/setup/nginx.conf /etc/nginx/nginx.conf
+
 # configure nginx
 cat > /etc/supervisor/conf.d/nginx.conf <<EOF
 [program:nginx]
