@@ -14,6 +14,7 @@ RUN apt-get install -y vim curl wget sudo net-tools && \
 
 # image specific
 RUN apt-get install -y nginx php5-common php5-cli php5-fpm
+RUN apt-get update && apt-get upgrade -y && apt-get clean # 20140225
 
 ADD resources/ /nginx-php/
 RUN chmod 755 /nginx-php/setup/install && /nginx-php/setup/install
