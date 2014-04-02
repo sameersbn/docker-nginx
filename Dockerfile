@@ -28,6 +28,5 @@ ADD authorized_keys /root/.ssh/
 RUN chmod 700 /root/.ssh && chmod 600 /root/.ssh/authorized_keys && chown root:root -R /root/.ssh
 
 EXPOSE 80
-EXPOSE 443
 
 CMD ["/usr/bin/supervisord", "-n"]
