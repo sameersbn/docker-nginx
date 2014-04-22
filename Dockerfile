@@ -3,7 +3,7 @@ MAINTAINER sameer@damagehead.com
 
 RUN apt-get update && \
 		apt-get install -y nginx php5-common php5-cli php5-fpm \
-			php5-mysql && \
+			php5-mysql php5-pgsql && \
 		apt-get clean # 20140418
 
 ADD assets/ /app/
