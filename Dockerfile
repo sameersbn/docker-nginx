@@ -2,7 +2,8 @@ FROM sameersbn/ubuntu:12.04.20140418
 MAINTAINER sameer@damagehead.com
 
 RUN apt-get update && \
-		apt-get install -y nginx php5-common php5-cli php5-fpm && \
+		apt-get install -y nginx php5-common php5-cli php5-fpm \
+			php5-mysql && \
 		apt-get clean # 20140418
 
 ADD assets/ /app/
