@@ -1,8 +1,9 @@
 server {
+	listen 80 default_server;
+	listen [::]:80 default_server ipv6only=on;
+
 	root /usr/share/nginx/www;
 	index index.php index.html index.htm;
-
-	server_name sameersbn.local;
 
 	location / {
 		autoindex on;
@@ -16,4 +17,3 @@ server {
 		include fastcgi_params;
 	}
 }
-
