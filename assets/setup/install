@@ -4,7 +4,6 @@ set -e
 rm -rf /etc/nginx/sites-available /etc/nginx/sites-enabled
 mv /app/setup/sites-available /etc/nginx/
 mv /app/setup/sites-enabled /etc/nginx/
-mv /app/setup/nginx.conf /etc/nginx/nginx.conf
 
 # configure nginx
 cat > /etc/supervisor/conf.d/nginx.conf <<EOF
