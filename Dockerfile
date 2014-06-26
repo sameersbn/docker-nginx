@@ -7,6 +7,8 @@ RUN apt-get update && \
 		apt-get clean # 20140625
 
 RUN	alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo)" && \
+		mkdir /tmp/nginx-rtmp-module && \
+		wget https://github.com/arut/nginx-rtmp-module/archive/v1.1.4.tar.gz -O - | tar -zxf - --strip=1 -C /tmp/nginx-rtmp-module && \
 		mkdir -p /tmp/nginx && \
 		wget http://nginx.org/download/nginx-1.6.0.tar.gz -O - | tar -zxf - -C /tmp/nginx --strip=1 && \
 		cd /tmp/nginx && \
@@ -23,9 +25,10 @@ RUN	alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo
 			--with-http_addition_module --with-http_dav_module --with-http_geoip_module \
 			--with-http_gzip_static_module --with-http_image_filter_module \
 			--with-http_spdy_module --with-http_sub_module --with-http_xslt_module \
-			--with-mail --with-mail_ssl_module && \
+			--with-mail --with-mail_ssl_module --add-module=/tmp/nginx-rtmp-module && \
 		make && make install && mkdir -p /var/lib/nginx && \
-		rm -rf /tmp/nginx
+		cp /tmp/nginx-rtmp-module/stat.xsl /usr/share/nginx/html/ && \
+		rm -rf /tmp/nginx /tmp/nginx-rtmp-module
 
 ADD assets/setup/ /app/setup/
 RUN chmod 755 /app/setup/install
@@ -38,6 +41,7 @@ ADD authorized_keys /root/.ssh/
 
 EXPOSE 80
 EXPOSE 443
+EXPOSE 1935
 
 ENTRYPOINT ["/app/init"]
 CMD ["app:start"]
