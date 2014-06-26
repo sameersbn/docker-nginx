@@ -3,7 +3,7 @@ MAINTAINER sameer@damagehead.com
 
 RUN apt-get update && \
 		apt-get install -y make libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev \
-			php5-common php5-cli php5-fpm php5-mysql php5-pgsql php5-gd && \
+			php5-common php5-cli php5-fpm php5-mysql php5-pgsql php5-gd ffmpeg && \
 		apt-get clean # 20140625
 
 RUN	alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo)" && \
