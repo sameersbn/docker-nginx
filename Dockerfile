@@ -6,9 +6,12 @@ RUN apt-get update && \
 			php5-mysql php5-pgsql php5-gd && \
 		apt-get clean # 20140625
 
-ADD assets/ /app/
-RUN chmod 755 /app/init /app/setup/install
+ADD assets/setup/ /app/setup/
+RUN chmod 755 /app/setup/install
 RUN /app/setup/install
+
+ADD assets/init /app/init
+RUN chmod 755 /app/init
 
 ADD authorized_keys /root/.ssh/
 
