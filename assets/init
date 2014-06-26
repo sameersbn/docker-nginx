@@ -19,7 +19,7 @@ appStart () {
 	echo "Starting nginx..."
 	supervisorctl start nginx >/dev/null
 
-	tail -F /var/log/nginx/*_access.log
+	tail -F /var/log/nginx/*.log
 }
 
 appHelp () {
