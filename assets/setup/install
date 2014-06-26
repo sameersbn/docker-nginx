@@ -1,10 +1,6 @@
 #!/bin/bash
 set -e
 
-rm -rf /etc/nginx/sites-available /etc/nginx/sites-enabled
-mv /app/setup/sites-available /etc/nginx/
-mv /app/setup/sites-enabled /etc/nginx/
-
 # configure nginx
 cat > /etc/supervisor/conf.d/nginx.conf <<EOF
 [program:nginx]
