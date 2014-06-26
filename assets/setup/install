@@ -17,7 +17,12 @@ stdout_logfile=/var/log/supervisor/%(program_name)s.log
 stderr_logfile=/var/log/supervisor/%(program_name)s.log
 EOF
 
-# configure php5-fpm
+# configure php5-fpm to listen on unix domain sockets
+sed 's,listen = 127.0.0.1:9000,listen = /var/run/php5-fpm.sock,' -i /etc/php5/fpm/pool.d/www.conf
+sed 's,;listen.owner = www-data,listen.owner = www-data,' -i /etc/php5/fpm/pool.d/www.conf
+sed 's,;listen.group = www-data,listen.group = www-data,' -i /etc/php5/fpm/pool.d/www.conf
+sed 's,;listen.mode = 0660,listen.mode = 0660,' -i /etc/php5/fpm/pool.d/www.conf
+
 sed 's/;daemonize = yes/daemonize = no/' -i /etc/php5/fpm/php-fpm.conf
 cat > /etc/supervisor/conf.d/php5-fpm.conf <<EOF
 [program:php5-fpm]
