@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# install nginx.conf
+cp /app/setup/nginx.conf /etc/nginx/nginx.conf
+
 # configure nginx
 cat > /etc/supervisor/conf.d/nginx.conf <<EOF
 [program:nginx]
