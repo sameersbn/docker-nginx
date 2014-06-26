@@ -16,6 +16,7 @@ RUN chmod 755 /app/init
 ADD authorized_keys /root/.ssh/
 
 EXPOSE 80
+EXPOSE 443
 
 ENTRYPOINT ["/app/init"]
 CMD ["app:start"]
