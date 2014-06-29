@@ -4,6 +4,10 @@ MAINTAINER sameer@damagehead.com
 RUN apt-get update && \
 		apt-get install -y make libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev \
 			php5-common php5-cli php5-fpm php5-mysql php5-pgsql php5-gd ffmpeg && \
+		sed 's,listen = 127.0.0.1:9000,listen = /var/run/php5-fpm.sock,' -i /etc/php5/fpm/pool.d/www.conf && \
+		sed 's,;listen.owner = www-data,listen.owner = www-data,' -i /etc/php5/fpm/pool.d/www.conf && \
+		sed 's,;listen.group = www-data,listen.group = www-data,' -i /etc/php5/fpm/pool.d/www.conf && \
+		sed 's,;listen.mode = 0660,listen.mode = 0660,' -i /etc/php5/fpm/pool.d/www.conf && \
 		apt-get clean # 20140625
 
 RUN	alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo)" && \
