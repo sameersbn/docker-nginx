@@ -1,5 +1,2 @@
 #!/bin/bash
 set -e
-
-# install nginx.conf
-cp /app/setup/nginx.conf /etc/nginx/nginx.conf
