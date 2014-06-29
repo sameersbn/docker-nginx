@@ -35,11 +35,11 @@ RUN	alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo
 		rm -rf /tmp/nginx /tmp/nginx-rtmp-module
 
 ADD assets/setup/nginx.conf /etc/nginx/nginx.conf
-ADD assets/init /app/init
-RUN chmod 755 /app/init
+ADD init /init
+RUN chmod 755 /init
 
 EXPOSE 80
 EXPOSE 443
 EXPOSE 1935
 
-CMD ["/app/init"]
+CMD ["/init"]
