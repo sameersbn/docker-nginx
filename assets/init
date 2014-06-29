@@ -1,13 +1,10 @@
 #!/bin/bash
 set -e
 
-# start supervisord
-/usr/bin/supervisord
-
 echo "Starting php5-fpm..."
-supervisorctl start php5-fpm >/dev/null
+/usr/sbin/php5-fpm >/dev/null 2>&1
 
 echo "Starting nginx..."
-supervisorctl start nginx >/dev/null
+/usr/sbin/nginx >/dev/null 2>&1
 
 tail -F /var/log/nginx/*.log
