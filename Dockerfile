@@ -34,10 +34,6 @@ RUN	alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo
 		cp /tmp/nginx-rtmp-module/stat.xsl /usr/share/nginx/html/ && \
 		rm -rf /tmp/nginx /tmp/nginx-rtmp-module
 
-ADD assets/setup/ /app/setup/
-RUN chmod 755 /app/setup/install
-RUN /app/setup/install
-
 ADD assets/setup/nginx.conf /etc/nginx/nginx.conf
 ADD assets/init /app/init
 RUN chmod 755 /app/init
