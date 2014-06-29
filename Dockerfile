@@ -41,5 +41,4 @@ EXPOSE 80
 EXPOSE 443
 EXPOSE 1935
 
-ENTRYPOINT ["/app/init"]
-CMD ["app:start"]
+CMD ["/app/init"]
