@@ -30,6 +30,7 @@ RUN	alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo
 		rm -rf /tmp/nginx /tmp/nginx-rtmp-module
 
 ADD nginx.conf /etc/nginx/nginx.conf
+ADD php5-fpm.conf /etc/nginx/conf.d/php5-fpm.conf
 ADD init /init
 RUN chmod 755 /init
 
