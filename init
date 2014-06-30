@@ -1,8 +1,5 @@
 #!/bin/bash
 set -e
 
-echo "Starting php5-fpm..."
-/usr/sbin/php5-fpm >/dev/null 2>&1
-
 echo "Starting nginx..."
 /usr/sbin/nginx && tail -F /var/log/nginx/*.log
