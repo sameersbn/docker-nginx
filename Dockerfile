@@ -38,4 +38,4 @@ EXPOSE 80
 EXPOSE 443
 EXPOSE 1935
 
-CMD ["/init"]
+CMD ["/usr/sbin/nginx"]
