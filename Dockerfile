@@ -31,8 +31,6 @@ RUN	alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo
 
 ADD nginx.conf /etc/nginx/nginx.conf
 ADD php5-fpm.conf /etc/nginx/conf.d/php5-fpm.conf
-ADD init /init
-RUN chmod 755 /init
 
 EXPOSE 80
 EXPOSE 443
