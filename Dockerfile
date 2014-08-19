@@ -3,7 +3,7 @@ MAINTAINER sameer@damagehead.com
 
 RUN apt-get update && \
 		apt-get install -y make libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev ffmpeg && \
-		apt-get clean && rm -rf /var/lib/apt/lists/* # 20140818
+		rm -rf /var/lib/apt/lists/* # 20140818
 
 RUN	alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo)" && \
 		mkdir /tmp/nginx-rtmp-module && \
