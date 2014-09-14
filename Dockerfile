@@ -36,4 +36,4 @@ EXPOSE 80
 EXPOSE 443
 EXPOSE 1935
 
-CMD ["/usr/sbin/nginx"]
+CMD ["/usr/sbin/nginx", "-c", "/etc/nginx/nginx.conf"]
