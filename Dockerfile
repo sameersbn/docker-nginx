@@ -1,15 +1,18 @@
 FROM sameersbn/ubuntu:14.04.20140818
 MAINTAINER sameer@damagehead.com
 
+ENV NGINX_VERSION 1.6.0
+ENV RTMP_VERSION 1.1.4
+
 RUN apt-get update && \
     apt-get install -y make libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev libav-tools && \
     rm -rf /var/lib/apt/lists/* # 20140818
 
 RUN alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo)" && \
     mkdir /tmp/nginx-rtmp-module && \
-    wget https://github.com/arut/nginx-rtmp-module/archive/v1.1.4.tar.gz -O - | tar -zxf - --strip=1 -C /tmp/nginx-rtmp-module && \
+    wget https://github.com/arut/nginx-rtmp-module/archive/v${RTMP_VERSION}.tar.gz -O - | tar -zxf - --strip=1 -C /tmp/nginx-rtmp-module && \
     mkdir -p /tmp/nginx && \
-    wget http://nginx.org/download/nginx-1.6.0.tar.gz -O - | tar -zxf - -C /tmp/nginx --strip=1 && \
+    wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O - | tar -zxf - -C /tmp/nginx --strip=1 && \
     cd /tmp/nginx && \
     ./configure --prefix=/usr/share/nginx --conf-path=/etc/nginx/nginx.conf --sbin-path=/usr/sbin \
       --http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log \
