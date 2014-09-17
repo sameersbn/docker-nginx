@@ -4,18 +4,18 @@ MAINTAINER sameer@damagehead.com
 ENV NGINX_VERSION 1.6.0
 ENV RTMP_VERSION 1.1.4
 
-RUN apt-get update && \
-    apt-get install -y gcc make libc6-dev libpcre++-dev \
-      libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev libav-tools && \
-    rm -rf /var/lib/apt/lists/* # 20140918
+RUN apt-get update \
+ && apt-get install -y gcc make libc6-dev libpcre++-dev \
+      libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev libav-tools \
+ && rm -rf /var/lib/apt/lists/* # 20140918
 
-RUN alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo)" && \
-    mkdir /tmp/nginx-rtmp-module && \
-    wget https://github.com/arut/nginx-rtmp-module/archive/v${RTMP_VERSION}.tar.gz -O - | tar -zxf - --strip=1 -C /tmp/nginx-rtmp-module && \
-    mkdir -p /tmp/nginx && \
-    wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O - | tar -zxf - -C /tmp/nginx --strip=1 && \
-    cd /tmp/nginx && \
-    ./configure --prefix=/usr/share/nginx --conf-path=/etc/nginx/nginx.conf --sbin-path=/usr/sbin \
+RUN alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo)" \
+ && mkdir /tmp/nginx-rtmp-module \
+ && wget https://github.com/arut/nginx-rtmp-module/archive/v${RTMP_VERSION}.tar.gz -O - | tar -zxf - --strip=1 -C /tmp/nginx-rtmp-module \
+ && mkdir -p /tmp/nginx \
+ && wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O - | tar -zxf - -C /tmp/nginx --strip=1 \
+ && cd /tmp/nginx \
+ && ./configure --prefix=/usr/share/nginx --conf-path=/etc/nginx/nginx.conf --sbin-path=/usr/sbin \
       --http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log \
       --lock-path=/var/lock/nginx.lock --pid-path=/run/nginx.pid \
       --http-client-body-temp-path=/var/lib/nginx/body \
@@ -28,10 +28,11 @@ RUN alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo
       --with-http_addition_module --with-http_dav_module --with-http_geoip_module \
       --with-http_gzip_static_module --with-http_image_filter_module \
       --with-http_spdy_module --with-http_sub_module --with-http_xslt_module \
-      --with-mail --with-mail_ssl_module --add-module=/tmp/nginx-rtmp-module && \
-    make && make install && mkdir -p /var/lib/nginx && \
-    cp /tmp/nginx-rtmp-module/stat.xsl /usr/share/nginx/html/ && \
-    rm -rf /tmp/nginx /tmp/nginx-rtmp-module
+      --with-mail --with-mail_ssl_module --add-module=/tmp/nginx-rtmp-module \
+ && make && make install \
+ && mkdir -p /var/lib/nginx \
+ && cp /tmp/nginx-rtmp-module/stat.xsl /usr/share/nginx/html/ \
+ && rm -rf /tmp/nginx /tmp/nginx-rtmp-module
 
 ADD php5-fpm.conf /etc/nginx/conf.d/php5-fpm.conf
 
