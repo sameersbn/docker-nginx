@@ -1,12 +1,13 @@
-FROM sameersbn/ubuntu:14.04.20140818
+FROM sameersbn/debian:jessie.20140918
 MAINTAINER sameer@damagehead.com
 
 ENV NGINX_VERSION 1.6.0
 ENV RTMP_VERSION 1.1.4
 
 RUN apt-get update && \
-    apt-get install -y make libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev libav-tools && \
-    rm -rf /var/lib/apt/lists/* # 20140818
+    apt-get install -y gcc make libc6-dev libpcre++-dev \
+      libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev libav-tools && \
+    rm -rf /var/lib/apt/lists/* # 20140918
 
 RUN alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo)" && \
     mkdir /tmp/nginx-rtmp-module && \
