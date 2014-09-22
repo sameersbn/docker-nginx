@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+NGINX_VERSION=1.6.0
+RTMP_VERSION=1.1.4
+
 # build apt cache
 apt-get update
 

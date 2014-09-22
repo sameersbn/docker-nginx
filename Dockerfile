@@ -1,9 +1,6 @@
 FROM sameersbn/debian:jessie.20140918
 MAINTAINER sameer@damagehead.com
 
-ENV NGINX_VERSION 1.6.0
-ENV RTMP_VERSION 1.1.4
-
 RUN apt-get update \
  && apt-get install -y perl libssl1.0.0 libxslt1.1 libgd3 libxpm4 libgeoip1 libav-tools \
  && rm -rf /var/lib/apt/lists/* # 20140918
