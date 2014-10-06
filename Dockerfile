@@ -12,10 +12,13 @@ RUN /install
 ADD start /start
 RUN chmod 755 /start
 
+ADD nginx.conf.example /etc/nginx/nginx.conf
 ADD php5-fpm.conf /etc/nginx/conf.d/php5-fpm.conf
 
 EXPOSE 80
 EXPOSE 443
 EXPOSE 1935
+
+VOLUME ["/var/cache/ngx_pagespeed"]
 
 CMD ["/start"]

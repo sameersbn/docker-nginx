@@ -3,12 +3,13 @@ set -e
 
 NGINX_VERSION=1.6.2
 RTMP_VERSION=1.1.5
+NPS_VERSION=1.9.32.1
 
 # build apt cache
 apt-get update
 
 # install build dependencies
-apt-get install -y gcc make libc6-dev libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev
+apt-get install -y gcc g++ make libc6-dev libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev
 
 # use maximum available processor cores for the build
 alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo)"
@@ -17,10 +18,16 @@ alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo)"
 mkdir /tmp/nginx-rtmp-module
 wget https://github.com/arut/nginx-rtmp-module/archive/v${RTMP_VERSION}.tar.gz -O - | tar -zxf - --strip=1 -C /tmp/nginx-rtmp-module
 
+# download ngx_pagespeed
+mkdir /tmp/ngx_pagespeed
+wget https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.tar.gz -O - | tar -zxf - --strip=1 -C /tmp/ngx_pagespeed
+wget https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz -O - | tar -zxf - -C /tmp/ngx_pagespeed
+
 # compile nginx with the nginx-rtmp-module
 mkdir -p /tmp/nginx
 wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O - | tar -zxf - -C /tmp/nginx --strip=1
 cd /tmp/nginx
+
 ./configure --prefix=/usr/share/nginx --conf-path=/etc/nginx/nginx.conf --sbin-path=/usr/sbin \
   --http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log \
   --lock-path=/var/lock/nginx.lock --pid-path=/run/nginx.pid \
@@ -34,13 +41,15 @@ cd /tmp/nginx
   --with-http_addition_module --with-http_dav_module --with-http_geoip_module \
   --with-http_gzip_static_module --with-http_image_filter_module \
   --with-http_spdy_module --with-http_sub_module --with-http_xslt_module \
-  --with-mail --with-mail_ssl_module --add-module=/tmp/nginx-rtmp-module
+  --with-mail --with-mail_ssl_module \
+  --add-module=/tmp/nginx-rtmp-module \
+  --add-module=/tmp/ngx_pagespeed
 make && make install
 cp /tmp/nginx-rtmp-module/stat.xsl /usr/share/nginx/html/
 
 # purge build dependencies
-apt-get purge -y --auto-remove gcc make libc6-dev libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev
+apt-get purge -y --auto-remove gcc g++ make libc6-dev libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev
 
 # cleanup
-rm -rf /tmp/nginx /tmp/nginx-rtmp-module
+rm -rf /tmp/nginx /tmp/nginx-rtmp-module /tmp/ngx_pagespeed
 rm -rf /var/lib/apt/lists/*

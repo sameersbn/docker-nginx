@@ -48,6 +48,12 @@ http {
   # gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
   ##
+  # ngx_pagespeed config
+  ##
+  pagespeed on;
+  pagespeed FileCachePath /var/cache/ngx_pagespeed;
+
+  ##
   # nginx-naxsi config
   ##
   # Uncomment it if you installed nginx-naxsi
