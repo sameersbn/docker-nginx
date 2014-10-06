@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+# fix permissions and ownership of /var/lib/nginx
+mkdir -p -m 755 /var/lib/nginx
+chown -R root:root /var/lib/nginx
+
+exec /usr/sbin/nginx -c /etc/nginx/nginx.conf -g "daemon off;"

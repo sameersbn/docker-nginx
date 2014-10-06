@@ -36,7 +36,6 @@ cd /tmp/nginx
   --with-http_spdy_module --with-http_sub_module --with-http_xslt_module \
   --with-mail --with-mail_ssl_module --add-module=/tmp/nginx-rtmp-module
 make && make install
-mkdir -p /var/lib/nginx
 cp /tmp/nginx-rtmp-module/stat.xsl /usr/share/nginx/html/
 
 # purge build dependencies

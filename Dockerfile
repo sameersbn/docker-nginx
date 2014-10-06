@@ -9,10 +9,13 @@ ADD install /install
 RUN chmod 755 /install
 RUN /install
 
+ADD start /start
+RUN chmod 755 /start
+
 ADD php5-fpm.conf /etc/nginx/conf.d/php5-fpm.conf
 
 EXPOSE 80
 EXPOSE 443
 EXPOSE 1935
 
-CMD ["/usr/sbin/nginx", "-c", "/etc/nginx/nginx.conf", "-g", "daemon off;"]
+CMD ["/start"]
