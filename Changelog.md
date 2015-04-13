@@ -1,6 +1,6 @@
 # Changelog
 
-**latest**
+**1.6.3**
 - nginx: upgrade to v1.6.3
 
 **1.6.2**
