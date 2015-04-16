@@ -50,7 +50,7 @@ http {
   ##
   # ngx_pagespeed config
   ##
-  pagespeed on;
+  pagespeed off;
   pagespeed FileCachePath /var/cache/ngx_pagespeed;
 
   ##
