@@ -2,6 +2,7 @@
 
 **latest**
 - nginx-rtmp-module: upgrade to v1.1.7
+- nginx: upgrade to v1.8.0
 
 **1.6.3**
 - nginx: upgrade to v1.6.3
