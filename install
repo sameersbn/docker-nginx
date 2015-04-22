@@ -12,7 +12,7 @@ apt-get update
 apt-get install -y gcc g++ make libc6-dev libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev
 
 # use maximum available processor cores for the build
-alias make="make -j$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo)"
+alias make="make -j$(nproc)"
 
 # download nginx-rtmp-module
 mkdir /tmp/nginx-rtmp-module
