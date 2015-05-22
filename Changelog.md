@@ -1,6 +1,6 @@
 # Changelog
 
-**latest**
+**1.8.0-1**
 - fixed default nginx configuration
 
 **1.8.0**
