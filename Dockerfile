@@ -1,9 +1,9 @@
-FROM sameersbn/ubuntu:14.04.20150504
+FROM sameersbn/ubuntu:14.04.20150603
 MAINTAINER sameer@damagehead.com
 
 RUN apt-get update \
  && apt-get install -y perl libssl1.0.0 libxslt1.1 libgd3 libxpm4 libgeoip1 libav-tools \
- && rm -rf /var/lib/apt/lists/* # 20150504
+ && rm -rf /var/lib/apt/lists/* # 20150603
 
 ADD install /install
 RUN chmod 755 /install
