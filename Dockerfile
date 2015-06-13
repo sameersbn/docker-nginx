@@ -6,14 +6,15 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/* # 20150613
 
 ADD install /install
+COPY install /install
 RUN chmod 755 /install
 RUN /install
 
-ADD start /start
+COPY start /start
 RUN chmod 755 /start
 
-ADD nginx.conf.example /etc/nginx/nginx.conf
-ADD php5-fpm.conf /etc/nginx/conf.d/php5-fpm.conf
+COPY nginx.conf.example /etc/nginx/nginx.conf
+COPY php5-fpm.conf /etc/nginx/conf.d/php5-fpm.conf
 
 EXPOSE 80
 EXPOSE 443
