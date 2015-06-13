@@ -20,8 +20,17 @@ wget https://github.com/arut/nginx-rtmp-module/archive/v${RTMP_VERSION}.tar.gz -
 
 # download ngx_pagespeed
 mkdir /tmp/ngx_pagespeed
-wget https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.tar.gz -O - | tar -zxf - --strip=1 -C /tmp/ngx_pagespeed
-wget https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz -O - | tar -zxf - -C /tmp/ngx_pagespeed
+if [ -f /tmp/ngx_pagespeed-${NPS_VERSION}-beta.tar.gz ]; then
+  tar -zxf /tmp/ngx_pagespeed-${NPS_VERSION}-beta.tar.gz --strip=1 -C /tmp/ngx_pagespeed
+else
+  wget https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.tar.gz -O - | tar -zxf - --strip=1 -C /tmp/ngx_pagespeed
+fi
+
+if [ -f /tmp/psol-${NPS_VERSION}.tar.gz ]; then
+  tar -zxf /tmp/psol-${NPS_VERSION}.tar.gz -C /tmp/ngx_pagespeed
+else
+  wget https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz -O - | tar -zxf - -C /tmp/ngx_pagespeed
+fi
 
 # compile nginx with the nginx-rtmp-module
 mkdir -p /tmp/nginx
