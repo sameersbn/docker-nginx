@@ -14,7 +14,6 @@ COPY start /start
 RUN chmod 755 /start
 
 COPY nginx.conf.example /etc/nginx/nginx.conf
-COPY php5-fpm.conf /etc/nginx/conf.d/php5-fpm.conf
 
 EXPOSE 80
 EXPOSE 443
