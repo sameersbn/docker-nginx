@@ -20,6 +20,5 @@ EXPOSE 443
 EXPOSE 1935
 
 VOLUME ["/etc/nginx/sites-enabled"]
-VOLUME ["/var/cache/ngx_pagespeed"]
 
 CMD ["/start"]
