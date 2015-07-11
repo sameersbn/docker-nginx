@@ -15,9 +15,7 @@ RUN chmod 755 /start
 
 COPY nginx.conf.example /etc/nginx/nginx.conf
 
-EXPOSE 80
-EXPOSE 443
-EXPOSE 1935
+EXPOSE 80/tcp 443/tcp 1935/tcp
 
 VOLUME ["/etc/nginx/sites-enabled"]
 
