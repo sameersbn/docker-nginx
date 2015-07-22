@@ -58,7 +58,7 @@ http {
 	# ngx_pagespeed config
 	##
 	pagespeed off;
-	pagespeed FileCachePath /var/cache/ngx_pagespeed;
+	pagespeed FileCachePath /var/lib/nginx/ngx_pagespeed;
 
 	##
 	# Virtual Host Configs
