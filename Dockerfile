@@ -5,7 +5,8 @@ ENV RTMP_VERSION=1.1.7 \
     NPS_VERSION=1.9.32.1 \
     NGINX_VERSION=1.8.0 \
     NGINX_USER=www-data \
-    NGINX_LOG_DIR=/var/log/nginx
+    NGINX_LOG_DIR=/var/log/nginx \
+    NGINX_TEMP_DIR=/var/lib/nginx
 
 RUN apt-get update \
  && apt-get install -y perl libssl1.0.0 libxslt1.1 libgd3 libxpm4 libgeoip1 libav-tools \

@@ -36,11 +36,11 @@ cd /tmp/nginx
 ./configure --prefix=/usr/share/nginx --conf-path=/etc/nginx/nginx.conf --sbin-path=/usr/sbin \
   --http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log \
   --lock-path=/var/lock/nginx.lock --pid-path=/run/nginx.pid \
-  --http-client-body-temp-path=/var/lib/nginx/body \
-  --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
-  --http-proxy-temp-path=/var/lib/nginx/proxy \
-  --http-scgi-temp-path=/var/lib/nginx/scgi \
-  --http-uwsgi-temp-path=/var/lib/nginx/uwsgi \
+  --http-client-body-temp-path=${NGINX_TEMP_DIR}/body \
+  --http-fastcgi-temp-path=${NGINX_TEMP_DIR}/fastcgi \
+  --http-proxy-temp-path=${NGINX_TEMP_DIR}/proxy \
+  --http-scgi-temp-path=${NGINX_TEMP_DIR}/scgi \
+  --http-uwsgi-temp-path=${NGINX_TEMP_DIR}/uwsgi \
   --with-pcre-jit --with-ipv6 --with-http_ssl_module \
   --with-http_stub_status_module --with-http_realip_module \
   --with-http_addition_module --with-http_dav_module --with-http_geoip_module \
