@@ -6,14 +6,15 @@ ENV RTMP_VERSION=1.1.7 \
     NGINX_VERSION=1.8.0 \
     NGINX_USER=www-data \
     NGINX_LOG_DIR=/var/log/nginx \
-    NGINX_TEMP_DIR=/var/lib/nginx
+    NGINX_TEMP_DIR=/var/lib/nginx \
+    NGINX_SETUP_DIR=/var/cache/nginx
 
 RUN apt-get update \
  && apt-get install -y perl libssl1.0.0 libxslt1.1 libgd3 libxpm4 libgeoip1 libav-tools \
  && rm -rf /var/lib/apt/lists/*
 
-COPY install.sh /install.sh
-RUN bash /install.sh
+COPY install.sh ${NGINX_SETUP_DIR}/install.sh
+RUN bash ${NGINX_SETUP_DIR}/install.sh
 
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
