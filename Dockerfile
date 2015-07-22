@@ -8,13 +8,11 @@ RUN apt-get update \
 COPY install.sh /install.sh
 RUN bash /install.sh
 
-COPY start /start
-RUN chmod 755 /start
+COPY entrypoint.sh /sbin/entrypoint.sh
+RUN chmod 755 /sbin/entrypoint.sh
 
 COPY nginx.conf.example /etc/nginx/nginx.conf
 
 EXPOSE 80/tcp 443/tcp 1935/tcp
-
 VOLUME ["/etc/nginx/sites-enabled"]
-
-CMD ["/start"]
+CMD ["/sbin/entrypoint.sh"]
