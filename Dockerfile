@@ -5,6 +5,7 @@ ENV RTMP_VERSION=1.1.7 \
     NPS_VERSION=1.9.32.1 \
     NGINX_VERSION=1.8.0 \
     NGINX_USER=www-data \
+    NGINX_SITECONF_DIR=/etc/nginx/sites-enabled \
     NGINX_LOG_DIR=/var/log/nginx \
     NGINX_TEMP_DIR=/var/lib/nginx \
     NGINX_SETUP_DIR=/var/cache/nginx
@@ -22,5 +23,5 @@ RUN chmod 755 /sbin/entrypoint.sh
 COPY nginx.conf.example /etc/nginx/nginx.conf
 
 EXPOSE 80/tcp 443/tcp 1935/tcp
-VOLUME ["/etc/nginx/sites-enabled"]
+VOLUME ["${NGINX_SITECONF_DIR}"]
 CMD ["/sbin/entrypoint.sh"]
