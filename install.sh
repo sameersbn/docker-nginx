@@ -50,6 +50,26 @@ cd ${NGINX_SETUP_DIR}/nginx
   --add-module=${NGINX_SETUP_DIR}/nginx-rtmp-module \
   --add-module=${NGINX_SETUP_DIR}/ngx_pagespeed
 make && make install
+
+# create default configuration
+mkdir -p /etc/nginx/sites-enabled
+cat > /etc/nginx/sites-enabled/default <<EOF
+server {
+  listen 80 default_server;
+  listen [::]:80 default_server ipv6only=on;
+
+  root /usr/share/nginx/html;
+  index index.html index.htm;
+
+  server_name localhost;
+
+  location / {
+    try_files \$uri \$uri/ =404;
+  }
+}
+EOF
+
+# copy rtmp stats template
 cp ${NGINX_SETUP_DIR}/nginx-rtmp-module/stat.xsl /usr/share/nginx/html/
 
 # purge build dependencies
