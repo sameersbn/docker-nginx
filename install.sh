@@ -1,10 +1,6 @@
 #!/bin/bash
 set -e
 
-NGINX_VERSION=1.8.0
-RTMP_VERSION=1.1.7
-NPS_VERSION=1.9.32.1
-
 # build apt cache
 apt-get update
 
