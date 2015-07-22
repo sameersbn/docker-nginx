@@ -6,8 +6,7 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 COPY install.sh /install.sh
-RUN chmod 755 /install.sh
-RUN /install.sh
+RUN bash /install.sh
 
 COPY start /start
 RUN chmod 755 /start
