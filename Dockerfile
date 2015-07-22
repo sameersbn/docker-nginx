@@ -5,7 +5,6 @@ RUN apt-get update \
  && apt-get install -y perl libssl1.0.0 libxslt1.1 libgd3 libxpm4 libgeoip1 libav-tools \
  && rm -rf /var/lib/apt/lists/* # 20150712
 
-COPY releases/ /tmp/
 COPY install /install
 RUN chmod 755 /install
 RUN /install
