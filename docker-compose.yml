@@ -1,0 +1,6 @@
+nginx:
+  image: sameersbn/nginx:1.8.0-2
+  ports:
+    - "80:80"
+  volumes:
+    - /srv/docker/nginx/sites-enabled:/etc/nginx/sites-enabled
