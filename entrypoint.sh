@@ -15,4 +15,9 @@ mkdir -p ${NGINX_SITECONF_DIR}
 chmod -R 755 ${NGINX_SITECONF_DIR}
 chown -R root:root ${NGINX_SITECONF_DIR}
 
-exec /usr/sbin/nginx -c /etc/nginx/nginx.conf -g "daemon off;"
+# default behaviour is to launch nginx
+if [[ -z ${1} ]]; then
+  exec $(which nginx) -c /etc/nginx/nginx.conf -g "daemon off;"
+else
+  exec "$@"
+fi

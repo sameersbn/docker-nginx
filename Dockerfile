@@ -24,4 +24,4 @@ COPY nginx.conf.example /etc/nginx/nginx.conf
 
 EXPOSE 80/tcp 443/tcp 1935/tcp
 VOLUME ["${NGINX_SITECONF_DIR}"]
-CMD ["/sbin/entrypoint.sh"]
+ENTRYPOINT ["/sbin/entrypoint.sh"]
