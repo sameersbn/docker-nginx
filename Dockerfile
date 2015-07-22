@@ -17,10 +17,9 @@ RUN apt-get update \
 COPY install.sh ${NGINX_SETUP_DIR}/install.sh
 RUN bash ${NGINX_SETUP_DIR}/install.sh
 
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
-
-COPY nginx.conf.example /etc/nginx/nginx.conf
 
 EXPOSE 80/tcp 443/tcp 1935/tcp
 VOLUME ["${NGINX_SITECONF_DIR}"]
