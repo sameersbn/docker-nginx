@@ -4,3 +4,4 @@ nginx:
     - "80:80"
   volumes:
     - /srv/docker/nginx/sites-enabled:/etc/nginx/sites-enabled
+  restart: always
