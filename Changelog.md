@@ -1,6 +1,6 @@
 # Changelog
 
-**latest**
+**1.8.0-3**
 - ngx_pagespeed: upgrade to v1.9.32.4
 
 **1.8.0-1**
