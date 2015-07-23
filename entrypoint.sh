@@ -26,6 +26,7 @@ fi
 
 # default behaviour is to launch nginx
 if [[ -z ${1} ]]; then
+  echo "Starting nginx..."
   exec $(which nginx) -c /etc/nginx/nginx.conf -g "daemon off;" ${EXTRA_ARGS}
 else
   exec "$@"
