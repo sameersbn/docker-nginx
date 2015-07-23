@@ -11,26 +11,50 @@ apt-get install -y gcc g++ make libc6-dev libpcre++-dev libssl-dev libxslt-dev l
 alias make="make -j$(nproc)"
 
 # download nginx-rtmp-module
+if [ ! -f ${NGINX_SETUP_DIR}/nginx-rtmp-module-${RTMP_VERSION}.tar.gz ]; then
+  echo "Downloading nginx-rtmp-module-${RTMP_VERSION}..."
+  wget https://github.com/pagespeed/nginx-rtmp-module/archive/release-${RTMP_VERSION}.tar.gz -O ${NGINX_SETUP_DIR}/nginx-rtmp-module-${RTMP_VERSION}.tar.gz
+fi
+
+echo "Extracting nginx-rtmp-module-${RTMP_VERSION}..."
 mkdir ${NGINX_SETUP_DIR}/nginx-rtmp-module
-wget https://github.com/arut/nginx-rtmp-module/archive/v${RTMP_VERSION}.tar.gz -O - | tar -zxf - --strip=1 -C ${NGINX_SETUP_DIR}/nginx-rtmp-module
+tar -zxf ${NGINX_SETUP_DIR}/nginx-rtmp-module-${RTMP_VERSION}.tar.gz --strip=1 -C ${NGINX_SETUP_DIR}/nginx-rtmp-module
+rm -rf ${NGINX_SETUP_DIR}/nginx-rtmp-module-${RTMP_VERSION}.tar.gz
 
 # download ngx_pagespeed
+if [ ! -f ${NGINX_SETUP_DIR}/ngx_pagespeed-${NPS_VERSION}-beta.tar.gz ]; then
+  echo "Downloading ngx_pagespeed-${NPS_VERSION}..."
+  wget https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.tar.gz -O ${NGINX_SETUP_DIR}/ngx_pagespeed-${NPS_VERSION}-beta.tar.gz
+fi
+
+echo "Extracting ngx_pagespeed-${NPS_VERSION}..."
 mkdir ${NGINX_SETUP_DIR}/ngx_pagespeed
-if [ -f ${NGINX_SETUP_DIR}/ngx_pagespeed-${NPS_VERSION}-beta.tar.gz ]; then
-  tar -zxf ${NGINX_SETUP_DIR}/ngx_pagespeed-${NPS_VERSION}-beta.tar.gz --strip=1 -C ${NGINX_SETUP_DIR}/ngx_pagespeed
-else
-  wget https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.tar.gz -O - | tar -zxf - --strip=1 -C ${NGINX_SETUP_DIR}/ngx_pagespeed
+tar -zxf ${NGINX_SETUP_DIR}/ngx_pagespeed-${NPS_VERSION}-beta.tar.gz --strip=1 -C ${NGINX_SETUP_DIR}/ngx_pagespeed
+rm -rf ${NGINX_SETUP_DIR}/ngx_pagespeed-${NPS_VERSION}-beta.tar.gz
+
+# download psol
+if [ ! -f ${NGINX_SETUP_DIR}/psol-${NPS_VERSION}.tar.gz ]; then
+  echo "Downloading psol-${NPS_VERSION}..."
+  wget https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz -O ${NGINX_SETUP_DIR}/psol-${NPS_VERSION}.tar.gz
 fi
 
-if [ -f ${NGINX_SETUP_DIR}/psol-${NPS_VERSION}.tar.gz ]; then
-  tar -zxf ${NGINX_SETUP_DIR}/psol-${NPS_VERSION}.tar.gz -C ${NGINX_SETUP_DIR}/ngx_pagespeed
-else
-  wget https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz -O - | tar -zxf - -C ${NGINX_SETUP_DIR}/ngx_pagespeed
+echo "Extracting psol-${NPS_VERSION}..."
+mkdir ${NGINX_SETUP_DIR}/ngx_pagespeed/psol
+tar -zxf ${NGINX_SETUP_DIR}/psol-${NPS_VERSION}.tar.gz --strip=1 -C ${NGINX_SETUP_DIR}/ngx_pagespeed/psol
+rm -rf ${NGINX_SETUP_DIR}/psol-${NPS_VERSION}.tar.gz
+
+# download nginx
+if [ ! -f ${NGINX_SETUP_DIR}/nginx-${NGINX_VERSION}.tar.gz ]; then
+  echo "Downloading nginx-${NGINX_VERSION}..."
+  wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O ${NGINX_SETUP_DIR}/nginx-${NGINX_VERSION}.tar.gz
 fi
 
-# compile nginx with the nginx-rtmp-module
+echo "Extracting nginx-${NGINX_VERSION}..."
 mkdir -p ${NGINX_SETUP_DIR}/nginx
-wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O - | tar -zxf - -C ${NGINX_SETUP_DIR}/nginx --strip=1
+tar -zxf ${NGINX_SETUP_DIR}/nginx-${NGINX_VERSION}.tar.gz --strip=1 -C ${NGINX_SETUP_DIR}/nginx
+rm -rf ${NGINX_SETUP_DIR}/nginx-${NGINX_VERSION}.tar.gz
+
+# build nginx
 cd ${NGINX_SETUP_DIR}/nginx
 
 ./configure --prefix=/usr/share/nginx --conf-path=/etc/nginx/nginx.conf --sbin-path=/usr/sbin \
