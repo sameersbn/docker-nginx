@@ -13,7 +13,7 @@ alias make="make -j$(nproc)"
 # download nginx-rtmp-module
 if [ ! -f ${NGINX_SETUP_DIR}/nginx-rtmp-module-${RTMP_VERSION}.tar.gz ]; then
   echo "Downloading nginx-rtmp-module-${RTMP_VERSION}..."
-  wget https://github.com/pagespeed/nginx-rtmp-module/archive/release-${RTMP_VERSION}.tar.gz -O ${NGINX_SETUP_DIR}/nginx-rtmp-module-${RTMP_VERSION}.tar.gz
+  wget https://github.com/arut/nginx-rtmp-module/archive/v${RTMP_VERSION}.tar.gz -O ${NGINX_SETUP_DIR}/nginx-rtmp-module-${RTMP_VERSION}.tar.gz
 fi
 
 echo "Extracting nginx-rtmp-module-${RTMP_VERSION}..."
