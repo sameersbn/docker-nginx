@@ -14,7 +14,7 @@ RUN apt-get update \
  && apt-get install -y perl libssl1.0.0 libxslt1.1 libgd3 libxpm4 libgeoip1 libav-tools \
  && rm -rf /var/lib/apt/lists/*
 
-COPY install.sh ${NGINX_SETUP_DIR}/install.sh
+COPY setup/ ${NGINX_SETUP_DIR}/
 RUN bash ${NGINX_SETUP_DIR}/install.sh
 
 COPY nginx.conf /etc/nginx/nginx.conf
