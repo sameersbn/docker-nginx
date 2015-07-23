@@ -15,7 +15,7 @@
 
 # Introduction
 
-`Dockerfile` to create a [Docker](https://www.docker.com/) container image for [NGINX](http://nginx.org/en/).
+`Dockerfile` to create a [Docker](https://www.docker.com/) container image for [NGINX](http://nginx.org/en/) with [ngx_pagespeed](https://github.com/pagespeed/ngx_pagespeed) and [nginx-rtmp-module](https://github.com/arut/nginx-rtmp-module) module support.
 
 NGINX is a web server with a strong focus on high concurrency, performance and low memory usage. It can also act as a reverse proxy server for HTTP, HTTPS, SMTP, POP3, and IMAP protocols, as well as a load balancer and an HTTP cache.
 
