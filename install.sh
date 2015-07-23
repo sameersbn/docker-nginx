@@ -1,62 +1,32 @@
 #!/bin/bash
 set -e
 
-# build apt cache
-apt-get update
+download_and_extract() {
+  src=${1}
+  dest=${2}
+  tarball=$(basename ${src})
 
-# install build dependencies
+  if [ ! -f ${NGINX_SETUP_DIR}/${tarball} ]; then
+    echo "Downloading ${tarball}..."
+    wget ${src} -O ${NGINX_SETUP_DIR}/${tarball}
+  fi
+
+  echo "Extracting ${tarball}..."
+  mkdir ${dest}
+  tar -zxf ${NGINX_SETUP_DIR}/${tarball} --strip=1 -C ${dest}
+  rm -rf ${NGINX_SETUP_DIR}/${tarball}
+}
+
+apt-get update
 apt-get install -y gcc g++ make libc6-dev libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev
 
-# use maximum available processor cores for the build
+download_and_extract "https://github.com/arut/nginx-rtmp-module/archive/v${RTMP_VERSION}.tar.gz" "${NGINX_SETUP_DIR}/nginx-rtmp-module"
+download_and_extract "https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.tar.gz" "${NGINX_SETUP_DIR}/ngx_pagespeed"
+download_and_extract "https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz" "${NGINX_SETUP_DIR}/ngx_pagespeed/psol"
+download_and_extract "http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz" "${NGINX_SETUP_DIR}/nginx"
+
 alias make="make -j$(nproc)"
-
-# download nginx-rtmp-module
-if [ ! -f ${NGINX_SETUP_DIR}/nginx-rtmp-module-${RTMP_VERSION}.tar.gz ]; then
-  echo "Downloading nginx-rtmp-module-${RTMP_VERSION}..."
-  wget https://github.com/arut/nginx-rtmp-module/archive/v${RTMP_VERSION}.tar.gz -O ${NGINX_SETUP_DIR}/nginx-rtmp-module-${RTMP_VERSION}.tar.gz
-fi
-
-echo "Extracting nginx-rtmp-module-${RTMP_VERSION}..."
-mkdir ${NGINX_SETUP_DIR}/nginx-rtmp-module
-tar -zxf ${NGINX_SETUP_DIR}/nginx-rtmp-module-${RTMP_VERSION}.tar.gz --strip=1 -C ${NGINX_SETUP_DIR}/nginx-rtmp-module
-rm -rf ${NGINX_SETUP_DIR}/nginx-rtmp-module-${RTMP_VERSION}.tar.gz
-
-# download ngx_pagespeed
-if [ ! -f ${NGINX_SETUP_DIR}/ngx_pagespeed-${NPS_VERSION}-beta.tar.gz ]; then
-  echo "Downloading ngx_pagespeed-${NPS_VERSION}..."
-  wget https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.tar.gz -O ${NGINX_SETUP_DIR}/ngx_pagespeed-${NPS_VERSION}-beta.tar.gz
-fi
-
-echo "Extracting ngx_pagespeed-${NPS_VERSION}..."
-mkdir ${NGINX_SETUP_DIR}/ngx_pagespeed
-tar -zxf ${NGINX_SETUP_DIR}/ngx_pagespeed-${NPS_VERSION}-beta.tar.gz --strip=1 -C ${NGINX_SETUP_DIR}/ngx_pagespeed
-rm -rf ${NGINX_SETUP_DIR}/ngx_pagespeed-${NPS_VERSION}-beta.tar.gz
-
-# download psol
-if [ ! -f ${NGINX_SETUP_DIR}/psol-${NPS_VERSION}.tar.gz ]; then
-  echo "Downloading psol-${NPS_VERSION}..."
-  wget https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz -O ${NGINX_SETUP_DIR}/psol-${NPS_VERSION}.tar.gz
-fi
-
-echo "Extracting psol-${NPS_VERSION}..."
-mkdir ${NGINX_SETUP_DIR}/ngx_pagespeed/psol
-tar -zxf ${NGINX_SETUP_DIR}/psol-${NPS_VERSION}.tar.gz --strip=1 -C ${NGINX_SETUP_DIR}/ngx_pagespeed/psol
-rm -rf ${NGINX_SETUP_DIR}/psol-${NPS_VERSION}.tar.gz
-
-# download nginx
-if [ ! -f ${NGINX_SETUP_DIR}/nginx-${NGINX_VERSION}.tar.gz ]; then
-  echo "Downloading nginx-${NGINX_VERSION}..."
-  wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O ${NGINX_SETUP_DIR}/nginx-${NGINX_VERSION}.tar.gz
-fi
-
-echo "Extracting nginx-${NGINX_VERSION}..."
-mkdir -p ${NGINX_SETUP_DIR}/nginx
-tar -zxf ${NGINX_SETUP_DIR}/nginx-${NGINX_VERSION}.tar.gz --strip=1 -C ${NGINX_SETUP_DIR}/nginx
-rm -rf ${NGINX_SETUP_DIR}/nginx-${NGINX_VERSION}.tar.gz
-
-# build nginx
 cd ${NGINX_SETUP_DIR}/nginx
-
 ./configure --prefix=/usr/share/nginx --conf-path=/etc/nginx/nginx.conf --sbin-path=/usr/sbin \
   --http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log \
   --lock-path=/var/lock/nginx.lock --pid-path=/run/nginx.pid \
@@ -96,9 +66,7 @@ EOF
 # copy rtmp stats template
 cp ${NGINX_SETUP_DIR}/nginx-rtmp-module/stat.xsl /usr/share/nginx/html/
 
-# purge build dependencies
-apt-get purge -y --auto-remove gcc g++ make libc6-dev libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev
-
 # cleanup
+apt-get purge -y --auto-remove gcc g++ make libc6-dev libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev
 rm -rf ${NGINX_SETUP_DIR}/{nginx,nginx-rtmp-module,ngx_pagespeed}
 rm -rf /var/lib/apt/lists/*
