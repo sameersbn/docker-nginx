@@ -17,13 +17,18 @@ download_and_extract() {
   rm -rf ${NGINX_SETUP_DIR}/${tarball}
 }
 
+NGINX_DOWNLOAD_URL="http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz"
+NGINX_RTMP_MODULE_DOWNLOAD_URL="https://github.com/arut/nginx-rtmp-module/archive/v${RTMP_VERSION}.tar.gz"
+NGX_PAGESPEED_DOWNLOAD_URL="https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.tar.gz"
+PSOL_DOWNLOAD_URL="https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz"
+
 apt-get update
 apt-get install -y gcc g++ make libc6-dev libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev
 
-download_and_extract "https://github.com/arut/nginx-rtmp-module/archive/v${RTMP_VERSION}.tar.gz" "${NGINX_SETUP_DIR}/nginx-rtmp-module"
-download_and_extract "https://github.com/pagespeed/ngx_pagespeed/archive/release-${NPS_VERSION}-beta.tar.gz" "${NGINX_SETUP_DIR}/ngx_pagespeed"
-download_and_extract "https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz" "${NGINX_SETUP_DIR}/ngx_pagespeed/psol"
-download_and_extract "http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz" "${NGINX_SETUP_DIR}/nginx"
+download_and_extract "${NGINX_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/nginx"
+download_and_extract "${NGINX_RTMP_MODULE_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/nginx-rtmp-module"
+download_and_extract "${NGX_PAGESPEED_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/ngx_pagespeed"
+download_and_extract "${PSOL_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/ngx_pagespeed/psol"
 
 alias make="make -j$(nproc)"
 cd ${NGINX_SETUP_DIR}/nginx
