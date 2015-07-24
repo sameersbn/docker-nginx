@@ -8,7 +8,7 @@ download_and_extract() {
 
   if [ ! -f ${NGINX_SETUP_DIR}/sources/${tarball} ]; then
     echo "Downloading ${tarball}..."
-    mkdir -p ${NGINX_SETUP_DIR}/
+    mkdir -p ${NGINX_SETUP_DIR}/sources/
     wget ${src} -O ${NGINX_SETUP_DIR}/sources/${tarball}
   fi
 
