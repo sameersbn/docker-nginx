@@ -6,15 +6,16 @@ download_and_extract() {
   dest=${2}
   tarball=$(basename ${src})
 
-  if [ ! -f ${NGINX_SETUP_DIR}/${tarball} ]; then
+  if [ ! -f ${NGINX_SETUP_DIR}/sources/${tarball} ]; then
     echo "Downloading ${tarball}..."
-    wget ${src} -O ${NGINX_SETUP_DIR}/${tarball}
+    mkdir -p ${NGINX_SETUP_DIR}/
+    wget ${src} -O ${NGINX_SETUP_DIR}/sources/${tarball}
   fi
 
   echo "Extracting ${tarball}..."
   mkdir ${dest}
-  tar -zxf ${NGINX_SETUP_DIR}/${tarball} --strip=1 -C ${dest}
-  rm -rf ${NGINX_SETUP_DIR}/${tarball}
+  tar -zxf ${NGINX_SETUP_DIR}/sources/${tarball} --strip=1 -C ${dest}
+  rm -rf ${NGINX_SETUP_DIR}/sources/${tarball}
 }
 
 NGINX_DOWNLOAD_URL="http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz"
