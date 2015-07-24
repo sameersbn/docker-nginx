@@ -50,26 +50,43 @@ cd ${NGINX_SETUP_DIR}/nginx
   --add-module=${NGINX_SETUP_DIR}/ngx_pagespeed
 make && make install
 
+# copy rtmp stats template
+cp ${NGINX_SETUP_DIR}/nginx-rtmp-module/stat.xsl /usr/share/nginx/html/
+
 # create default configuration
 mkdir -p /etc/nginx/sites-enabled
 cat > /etc/nginx/sites-enabled/default <<EOF
 server {
   listen 80 default_server;
   listen [::]:80 default_server ipv6only=on;
+  server_name localhost;
 
   root /usr/share/nginx/html;
   index index.html index.htm;
 
-  server_name localhost;
-
   location / {
     try_files \$uri \$uri/ =404;
   }
+
+  location /stat {
+    rtmp_stat all;
+    rtmp_stat_stylesheet stat.xsl;
+  }
+
+  location /stat.xsl {
+    root html;
+  }
+
+  location /control {
+    rtmp_control all;
+  }
+
+  error_page  500 502 503 504 /50x.html;
+    location = /50x.html {
+    root html;
+  }
 }
 EOF
-
-# copy rtmp stats template
-cp ${NGINX_SETUP_DIR}/nginx-rtmp-module/stat.xsl /usr/share/nginx/html/
 
 # cleanup
 apt-get purge -y --auto-remove gcc g++ make libc6-dev libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev
