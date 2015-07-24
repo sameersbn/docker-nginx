@@ -13,7 +13,6 @@ chown -R root:root ${NGINX_TEMP_DIR}
 # create site config dir
 mkdir -p ${NGINX_SITECONF_DIR}
 chmod -R 755 ${NGINX_SITECONF_DIR}
-chown -R root:root ${NGINX_SITECONF_DIR}
 
 # allow arguments to be passed to nginx
 if [[ ${1:0:1} = '-' ]]; then
