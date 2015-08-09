@@ -1,18 +1,25 @@
 #!/bin/bash
 set -e
 
-# create log dir
-mkdir -p ${NGINX_LOG_DIR}
-chmod -R 0755 ${NGINX_LOG_DIR}
-chown -R ${NGINX_USER}:root ${NGINX_LOG_DIR}
+create_log_dir() {
+  mkdir -p ${NGINX_LOG_DIR}
+  chmod -R 0755 ${NGINX_LOG_DIR}
+  chown -R ${NGINX_USER}:root ${NGINX_LOG_DIR}
+}
 
-# create temp dir
-mkdir -p ${NGINX_TEMP_DIR}
-chown -R root:root ${NGINX_TEMP_DIR}
+create_tmp_dir(){
+  mkdir -p ${NGINX_TEMP_DIR}
+  chown -R root:root ${NGINX_TEMP_DIR}
+}
 
-# create site config dir
-mkdir -p ${NGINX_SITECONF_DIR}
-chmod -R 755 ${NGINX_SITECONF_DIR}
+create_siteconf_dir() {
+  mkdir -p ${NGINX_SITECONF_DIR}
+  chmod -R 755 ${NGINX_SITECONF_DIR}
+}
+
+create_log_dir
+create_tmp_dir
+create_siteconf_dir
 
 # allow arguments to be passed to nginx
 if [[ ${1:0:1} = '-' ]]; then
