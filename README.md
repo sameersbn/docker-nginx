@@ -1,4 +1,4 @@
-# sameersbn/nginx:1.8.0-4
+# sameersbn/nginx:1.8.0-5
 
 - [Introduction](#introduction)
   - [Contributing](#contributing)
@@ -46,7 +46,7 @@ If the above recommendations do not help then [report your issue](../../issues/n
 This image is available as a [trusted build](//hub.docker.com/r/sameersbn/nginx) on the [Docker hub](//hub.docker.com) and is the recommended method of installation.
 
 ```bash
-docker pull sameersbn/nginx:1.8.0-4
+docker pull sameersbn/nginx:1.8.0-5
 ```
 
 Alternatively you can build the image yourself.
@@ -64,7 +64,7 @@ Start NGINX using:
 ```bash
 docker run --name nginx -d --restart=always \
   --publish 80:80 \
-  sameersbn/nginx:1.8.0-4
+  sameersbn/nginx:1.8.0-5
 ```
 
 *Alternatively, you can use the sample [docker-compose.yml](docker-compose.yml) file to start the container using [Docker Compose](https://docs.docker.com/compose/)*
@@ -76,7 +76,7 @@ You can customize the launch command of NGINX server by specifying arguments to 
 ```bash
 docker run --name nginx -it --rm \
   --publish 80:80 \
-  sameersbn/nginx:1.8.0-4 -h
+  sameersbn/nginx:1.8.0-5 -h
 ```
 
 ## Configuration
@@ -87,7 +87,7 @@ To configure NGINX as per your requirements edit the default [nginx.conf](nginx.
 docker run --name nginx -it --rm \
   --publish 80:80 \
   --volume /srv/docker/nginx/nginx.conf:/etc/nginx/nginx.conf \
-  sameersbn/nginx:1.8.0-4
+  sameersbn/nginx:1.8.0-5
 ```
 
 To configure virtual hosts, mount the directory containing the virtual host configurations at `/etc/nginx/sites-enabled/`.
@@ -97,7 +97,7 @@ docker run --name nginx -it --rm \
   --publish 80:80 \
   --volume /srv/docker/nginx/nginx.conf:/etc/nginx/nginx.conf \
   --volume /srv/docker/nginx/sites-enabled:/etc/nginx/sites-enabled \
-  sameersbn/nginx:1.8.0-4
+  sameersbn/nginx:1.8.0-5
 ```
 
 > **Note**: SELinux users should update the security context of the host mountpoints so that it plays nicely with Docker:
@@ -130,7 +130,7 @@ To upgrade to newer releases:
   1. Download the updated Docker image:
 
   ```bash
-  docker pull sameersbn/nginx:1.8.0-4
+  docker pull sameersbn/nginx:1.8.0-5
   ```
 
   2. Stop the currently running image:
@@ -150,7 +150,7 @@ To upgrade to newer releases:
   ```bash
   docker run -name nginx -d \
     [OPTIONS] \
-    sameersbn/nginx:1.8.0-4
+    sameersbn/nginx:1.8.0-5
   ```
 
 ## Shell Access
