@@ -24,3 +24,4 @@ RUN chmod 755 /sbin/entrypoint.sh
 EXPOSE 80/tcp 443/tcp 1935/tcp
 VOLUME ["${NGINX_SITECONF_DIR}"]
 ENTRYPOINT ["/sbin/entrypoint.sh"]
+CMD ["/usr/sbin/nginx"]
