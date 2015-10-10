@@ -24,7 +24,7 @@ NGX_PAGESPEED_DOWNLOAD_URL="https://github.com/pagespeed/ngx_pagespeed/archive/v
 PSOL_DOWNLOAD_URL="https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz"
 
 apt-get update
-apt-get install -y gcc g++ make libc6-dev libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev
+DEBIAN_FRONTEND=noninteractive apt-get install -y gcc g++ make libc6-dev libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev libgeoip-dev
 
 download_and_extract "${NGINX_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/nginx"
 download_and_extract "${NGINX_RTMP_MODULE_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/nginx-rtmp-module"
