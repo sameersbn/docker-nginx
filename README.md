@@ -1,3 +1,5 @@
+[![Docker Repository on Quay.io](https://quay.io/repository/sameersbn/nginx/status "Docker Repository on Quay.io")](https://quay.io/repository/sameersbn/nginx)
+
 # quay.io/sameersbn/nginx:1.8.0-6
 
 - [Introduction](#introduction)
