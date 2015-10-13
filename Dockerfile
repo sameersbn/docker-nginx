@@ -1,4 +1,4 @@
-FROM quay.io/sameersbn/ubuntu:14.04.20151011
+FROM quay.io/sameersbn/ubuntu:14.04.20151013
 MAINTAINER sameer@damagehead.com
 
 ENV RTMP_VERSION=1.1.7 \
