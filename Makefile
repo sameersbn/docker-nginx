@@ -1,7 +1,7 @@
 all: build
 
 build:
-	@docker build --tag=quay.io/sameersbn/nginx .
+	@docker build --tag=sameersbn/nginx .
 
 release: build
-	@docker build --tag=quay.io/sameersbn/nginx:$(shell cat VERSION) .
+	@docker build --tag=sameersbn/nginx:$(shell cat VERSION) .

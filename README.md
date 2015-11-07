@@ -1,6 +1,6 @@
 [![Docker Repository on Quay.io](https://quay.io/repository/sameersbn/nginx/status "Docker Repository on Quay.io")](https://quay.io/repository/sameersbn/nginx)
 
-# quay.io/sameersbn/nginx:1.8.0-8
+# sameersbn/nginx:1.8.0-8
 
 - [Introduction](#introduction)
   - [Contributing](#contributing)
@@ -45,10 +45,12 @@ If the above recommendations do not help then [report your issue](../../issues/n
 
 ## Installation
 
-Automated builds of the image are available on [Quay.io](https://quay.io/repository/sameersbn/nginx) and is the recommended method of installation.
+Automated builds of the image are available on [Dockerhub](https://hub.docker.com/r/sameersbn/nginx) and is the recommended method of installation.
+
+> **Note**: Builds are also available on [Quay.io](https://quay.io/repository/sameersbn/nginx)
 
 ```bash
-docker pull quay.io/sameersbn/nginx:1.8.0-8
+docker pull sameersbn/nginx:1.8.0-8
 ```
 
 Alternatively you can build the image yourself.
@@ -66,7 +68,7 @@ Start NGINX using:
 ```bash
 docker run --name nginx -d --restart=always \
   --publish 80:80 \
-  quay.io/sameersbn/nginx:1.8.0-8
+  sameersbn/nginx:1.8.0-8
 ```
 
 *Alternatively, you can use the sample [docker-compose.yml](docker-compose.yml) file to start the container using [Docker Compose](https://docs.docker.com/compose/)*
@@ -78,7 +80,7 @@ You can customize the launch command of NGINX server by specifying arguments to 
 ```bash
 docker run --name nginx -it --rm \
   --publish 80:80 \
-  quay.io/sameersbn/nginx:1.8.0-8 -h
+  sameersbn/nginx:1.8.0-8 -h
 ```
 
 ## Configuration
@@ -89,7 +91,7 @@ To configure NGINX as per your requirements edit the default [nginx.conf](nginx.
 docker run --name nginx -it --rm \
   --publish 80:80 \
   --volume /srv/docker/nginx/nginx.conf:/etc/nginx/nginx.conf \
-  quay.io/sameersbn/nginx:1.8.0-8
+  sameersbn/nginx:1.8.0-8
 ```
 
 To configure virtual hosts, mount the directory containing the virtual host configurations at `/etc/nginx/sites-enabled/`.
@@ -99,7 +101,7 @@ docker run --name nginx -it --rm \
   --publish 80:80 \
   --volume /srv/docker/nginx/nginx.conf:/etc/nginx/nginx.conf \
   --volume /srv/docker/nginx/sites-enabled:/etc/nginx/sites-enabled \
-  quay.io/sameersbn/nginx:1.8.0-8
+  sameersbn/nginx:1.8.0-8
 ```
 
 > **Note**: SELinux users should update the security context of the host mountpoints so that it plays nicely with Docker:
@@ -132,7 +134,7 @@ To upgrade to newer releases:
   1. Download the updated Docker image:
 
   ```bash
-  docker pull quay.io/sameersbn/nginx:1.8.0-8
+  docker pull sameersbn/nginx:1.8.0-8
   ```
 
   2. Stop the currently running image:
@@ -152,7 +154,7 @@ To upgrade to newer releases:
   ```bash
   docker run -name nginx -d \
     [OPTIONS] \
-    quay.io/sameersbn/nginx:1.8.0-8
+    sameersbn/nginx:1.8.0-8
   ```
 
 ## Shell Access
