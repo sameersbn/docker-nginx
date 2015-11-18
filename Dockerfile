@@ -1,4 +1,4 @@
-FROM sameersbn/ubuntu:14.04.20151023
+FROM sameersbn/ubuntu:14.04.20151117
 MAINTAINER sameer@damagehead.com
 
 ENV RTMP_VERSION=1.1.7 \
