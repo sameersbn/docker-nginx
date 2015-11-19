@@ -56,9 +56,7 @@ docker pull sameersbn/nginx:1.8.0-9
 Alternatively you can build the image yourself.
 
 ```bash
-git clone https://github.com/sameersbn/docker-nginx.git
-cd docker-nginx
-docker build --tag $USER/nginx .
+docker build -t sameersbn/nginx github.com/sameersbn/docker-nginx
 ```
 
 ## Quickstart
