@@ -1,5 +1,8 @@
 # Changelog
 
+**latest**
+- nginx: upgrade to v1.8.1
+
 **1.8.0-3**
 - ngx_pagespeed: upgrade to v1.9.32.4
 
