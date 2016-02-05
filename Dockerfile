@@ -3,6 +3,7 @@ MAINTAINER sameer@damagehead.com
 
 ENV RTMP_VERSION=1.1.7 \
     NPS_VERSION=1.9.32.10 \
+    LOADED_LIBAV_VERSION=11.4 \
     NGINX_VERSION=1.8.1 \
     NGINX_USER=www-data \
     NGINX_SITECONF_DIR=/etc/nginx/sites-enabled \
@@ -10,9 +11,10 @@ ENV RTMP_VERSION=1.1.7 \
     NGINX_TEMP_DIR=/var/lib/nginx \
     NGINX_SETUP_DIR=/var/cache/nginx
 
-RUN apt-get update \
- && DEBIAN_FRONTEND=noninteractive apt-get install -y perl libssl1.0.0 libxslt1.1 libgd3 libxpm4 libgeoip1 libav-tools \
- && rm -rf /var/lib/apt/lists/*
+ARG WITH_RTMP=true \
+  WITH_LOADED_LIBAV=false \
+  WITH_PAGESPEED=true \
+  WITH_DEBUG=false
 
 COPY setup/ ${NGINX_SETUP_DIR}/
 RUN bash ${NGINX_SETUP_DIR}/install.sh
