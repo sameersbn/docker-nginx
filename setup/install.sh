@@ -107,7 +107,7 @@ apt-get install -y $APT_PACKAGES
 
 alias make="make -j$(nproc)"
 
-$WITH_RTMP && WITH_LOADED_LIBAV && {
+$WITH_RTMP && $WITH_LOADED_LIBAV && {
   cd ${NGINX_SETUP_DIR}/libav
   ./configure \
     --enable-nonfree \
