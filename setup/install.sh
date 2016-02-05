@@ -87,7 +87,7 @@ EOF
 $WITH_PAGESPEED && {
   download_and_extract "${NGX_PAGESPEED_DOWNLOAD_URL}" \
     "${NGINX_SETUP_DIR}/ngx_pagespeed"
-  download_and_extract "${PSOL_DOWNLOAD_URL}"
+  download_and_extract "${PSOL_DOWNLOAD_URL}" \
     "${NGINX_SETUP_DIR}/ngx_pagespeed/psol"
   CONGIGURE_ARGS="$CONGIGURE_ARGS
     --add-module=${NGINX_SETUP_DIR}/ngx_pagespeed
