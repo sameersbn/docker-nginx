@@ -29,7 +29,7 @@ APT_PACKAGES="
   gcc g++ make libc6-dev libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev
   libgeoip-dev
   perl libssl1.0.0 libxslt1.1 libgd3 libxpm4
-  libgeoip1 libav-tools
+  libgeoip1
 "
 
 CONGIGURE_ARGS="
