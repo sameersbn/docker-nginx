@@ -11,10 +11,10 @@ ENV RTMP_VERSION=1.1.7 \
     NGINX_TEMP_DIR=/var/lib/nginx \
     NGINX_SETUP_DIR=/var/cache/nginx
 
-ARG WITH_RTMP=true \
-  WITH_LOADED_LIBAV=false \
-  WITH_PAGESPEED=true \
-  WITH_DEBUG=false
+ARG WITH_RTMP=true
+ARG WITH_LOADED_LIBAV=false
+ARG WITH_PAGESPEED=true
+ARG WITH_DEBUG=false
 
 COPY setup/ ${NGINX_SETUP_DIR}/
 RUN bash ${NGINX_SETUP_DIR}/install.sh
