@@ -1,0 +1,14 @@
+
+module sameersbn-docker-nginx 1.0;
+
+require {
+    type svirt_lxc_net_t;
+    type svirt_sandbox_file_t;
+    class chr_file execute;
+}
+
+#============= svirt_lxc_net_t ==============
+
+#!!!! The file '/dev/zero' is mislabeled on your system.
+#!!!! Fix with $ restorecon -R -v /dev/zero
+allow svirt_lxc_net_t svirt_sandbox_file_t:chr_file execute;

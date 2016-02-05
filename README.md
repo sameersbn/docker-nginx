@@ -31,6 +31,8 @@ If you find this image useful here's how you can help:
 
 ## Issues
 
+If you are using SELinux, please check out [this policy](support/selinux)
+
 Before reporting your issue please try updating Docker to the latest version and check if it resolves the issue. Refer to the Docker [installation guide](https://docs.docker.com/installation) for instructions.
 
 SELinux users should try disabling SELinux using the command `setenforce 0` to see if it resolves the issue.
