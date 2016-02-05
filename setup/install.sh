@@ -124,8 +124,10 @@ cd ${NGINX_SETUP_DIR}/nginx
 ./configure $CONGIGURE_ARGS
 make && make install
 
-# copy rtmp stats template
-cp ${NGINX_SETUP_DIR}/nginx-rtmp-module/stat.xsl /usr/share/nginx/html/
+$WITH_RTMP && {
+  # copy rtmp stats template
+  cp ${NGINX_SETUP_DIR}/nginx-rtmp-module/stat.xsl /usr/share/nginx/html/
+}
 
 # create default configuration
 mkdir -p /etc/nginx/sites-enabled
