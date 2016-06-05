@@ -22,7 +22,7 @@ NGINX_DOWNLOAD_URL="http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz"
 NGINX_RTMP_MODULE_DOWNLOAD_URL="https://github.com/arut/nginx-rtmp-module/archive/v${RTMP_VERSION}.tar.gz"
 NGX_PAGESPEED_DOWNLOAD_URL="https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VERSION}-beta.tar.gz"
 PSOL_DOWNLOAD_URL="https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz"
-LOADED_LIBAV_URL="https://libav.org/releases/libav-${LIBAV_VERSION}.tar.gz"
+LIBAV_DOWNLOAD_URL="https://libav.org/releases/libav-${LIBAV_VERSION}.tar.gz"
 
 APT_PACKAGES="
   gcc g++ make libc6-dev libpcre++-dev libssl-dev libxslt-dev libgd2-xpm-dev
@@ -74,7 +74,7 @@ $WITH_RTMP && {
 deb http://archive.ubuntu.com/ubuntu/ trusty multiverse
 deb-src http://archive.ubuntu.com/ubuntu/ trusty multiverse
 EOF
-    download_and_extract "${LOADED_LIBAV_URL}" "${NGINX_SETUP_DIR}/libav"
+    download_and_extract "${LIBAV_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/libav"
 
     APT_PACKAGES="$APT_PACKAGES build-essential yasm libfdk-aac-dev libx264-dev"
   } || {
