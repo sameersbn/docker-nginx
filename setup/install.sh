@@ -70,7 +70,7 @@ $WITH_RTMP && {
   CONGIGURE_ARGS="$CONGIGURE_ARGS
     --add-module=${NGINX_SETUP_DIR}/nginx-rtmp-module
   "
-  $WITH_LOADED_LIBAV && {
+  $BUILD_LIBAV && {
     cat >> /etc/apt/sources.list << EOF
 deb http://archive.ubuntu.com/ubuntu/ trusty multiverse
 deb-src http://archive.ubuntu.com/ubuntu/ trusty multiverse
@@ -107,7 +107,7 @@ apt-get install -y $APT_PACKAGES
 
 alias make="make -j$(nproc)"
 
-$WITH_RTMP && $WITH_LOADED_LIBAV && {
+$WITH_RTMP && $BUILD_LIBAV && {
   cd ${NGINX_SETUP_DIR}/libav
   ./configure \
     --enable-nonfree \
