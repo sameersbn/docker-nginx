@@ -109,9 +109,10 @@ alias make="make -j$(nproc)"
 $WITH_RTMP && $BUILD_LIBAV && {
   cd ${NGINX_SETUP_DIR}/libav
   ./configure \
+    --disable-static \
+    --enabled-shared \
     --enable-nonfree \
     --enable-gpl \
-    --disable-shared \
     --enable-static \
     --enable-libx264 \
     --enable-libfdk-aac
