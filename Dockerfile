@@ -11,10 +11,10 @@ ENV RTMP_VERSION=1.1.7 \
     NGINX_TEMP_DIR=/var/lib/nginx \
     NGINX_SETUP_DIR=/var/cache/nginx
 
-ARG WITH_RTMP=true
 ARG BUILD_LIBAV=false
-ARG WITH_PAGESPEED=true
 ARG WITH_DEBUG=false
+ARG WITH_PAGESPEED=true
+ARG WITH_RTMP=true
 
 COPY setup/ ${NGINX_SETUP_DIR}/
 RUN bash ${NGINX_SETUP_DIR}/install.sh
@@ -24,6 +24,8 @@ COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
 
 EXPOSE 80/tcp 443/tcp 1935/tcp
+
 VOLUME ["${NGINX_SITECONF_DIR}"]
+
 ENTRYPOINT ["/sbin/entrypoint.sh"]
 CMD ["/usr/sbin/nginx"]
