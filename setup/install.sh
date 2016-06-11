@@ -74,7 +74,9 @@ ${WITH_RTMP} && ${BUILD_LIBAV} && {
 # build nginx with modules enabled at build time
 download_and_extract "${NGINX_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/nginx"
 cd ${NGINX_SETUP_DIR}/nginx
-./configure --prefix=/usr/share/nginx \
+
+./configure \
+  --prefix=/usr/share/nginx \
   --conf-path=/etc/nginx/nginx.conf \
   --sbin-path=/usr/sbin \
   --http-log-path=/var/log/nginx/access.log \
