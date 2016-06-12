@@ -1,6 +1,6 @@
 # Changelog
 
-**latest**
+**1.10.1**
 - nginx: upgrade to v1.10.1
 
 **1.10.0**
