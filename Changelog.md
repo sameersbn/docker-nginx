@@ -2,6 +2,7 @@
 
 **latest**
 - nps: upgrade to v1.11.33.2
+- nginx: upgrade to v1.10.0
 
 **1.8.1**
 - nginx: upgrade to v1.8.1

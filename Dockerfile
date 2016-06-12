@@ -4,7 +4,7 @@ MAINTAINER sameer@damagehead.com
 ENV RTMP_VERSION=1.1.7 \
     NPS_VERSION=1.11.33.2 \
     LIBAV_VERSION=11.4 \
-    NGINX_VERSION=1.8.1 \
+    NGINX_VERSION=1.10.0 \
     NGINX_USER=www-data \
     NGINX_SITECONF_DIR=/etc/nginx/sites-enabled \
     NGINX_LOG_DIR=/var/log/nginx \
