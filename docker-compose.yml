@@ -1,5 +1,5 @@
 nginx:
-  image: sameersbn/nginx:1.8.1-9
+  image: sameersbn/nginx:1.10.0
   ports:
     - "80:80"
   volumes:

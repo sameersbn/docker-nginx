@@ -1,6 +1,6 @@
 # Changelog
 
-**latest**
+**1.10.0**
 - nps: upgrade to v1.11.33.2
 - nginx: upgrade to v1.10.0
 
