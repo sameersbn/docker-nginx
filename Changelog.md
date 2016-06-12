@@ -1,5 +1,8 @@
 # Changelog
 
+**latest**
+- nps: upgrade to v1.11.33.2
+
 **1.8.1**
 - nginx: upgrade to v1.8.1
 - ngx_pagespeed: upgrade to v1.9.32.10
