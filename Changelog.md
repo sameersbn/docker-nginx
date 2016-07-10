@@ -2,6 +2,7 @@
 
 **latest**
 - nginx-rtmp-module: upgrade to v1.1.8
+- libav: upgrade to v 1.7
 
 **1.10.1**
 - nginx: upgrade to v1.10.1
