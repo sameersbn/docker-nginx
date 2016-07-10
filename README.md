@@ -1,6 +1,6 @@
 [![Docker Repository on Quay.io](https://quay.io/repository/sameersbn/nginx/status "Docker Repository on Quay.io")](https://quay.io/repository/sameersbn/nginx)
 
-# sameersbn/nginx:1.10.1
+# sameersbn/nginx:1.10.1-1
 
 - [Introduction](#introduction)
   - [Contributing](#contributing)
@@ -52,7 +52,7 @@ Automated builds of the image are available on [Dockerhub](https://hub.docker.co
 > **Note**: Builds are also available on [Quay.io](https://quay.io/repository/sameersbn/nginx)
 
 ```bash
-docker pull sameersbn/nginx:1.10.1
+docker pull sameersbn/nginx:1.10.1-1
 ```
 
 Alternatively you can build the image yourself.
@@ -68,7 +68,7 @@ Start NGINX using:
 ```bash
 docker run --name nginx -d --restart=always \
   --publish 80:80 \
-  sameersbn/nginx:1.10.1
+  sameersbn/nginx:1.10.1-1
 ```
 
 *Alternatively, you can use the sample [docker-compose.yml](docker-compose.yml) file to start the container using [Docker Compose](https://docs.docker.com/compose/)*
@@ -80,7 +80,7 @@ You can customize the launch command of NGINX server by specifying arguments to 
 ```bash
 docker run --name nginx -it --rm \
   --publish 80:80 \
-  sameersbn/nginx:1.10.1 -h
+  sameersbn/nginx:1.10.1-1 -h
 ```
 
 ## Configuration
@@ -91,7 +91,7 @@ To configure NGINX as per your requirements edit the default [nginx.conf](nginx.
 docker run --name nginx -it --rm \
   --publish 80:80 \
   --volume /srv/docker/nginx/nginx.conf:/etc/nginx/nginx.conf \
-  sameersbn/nginx:1.10.1
+  sameersbn/nginx:1.10.1-1
 ```
 
 To configure virtual hosts, mount the directory containing the virtual host configurations at `/etc/nginx/sites-enabled/`.
@@ -101,7 +101,7 @@ docker run --name nginx -it --rm \
   --publish 80:80 \
   --volume /srv/docker/nginx/nginx.conf:/etc/nginx/nginx.conf \
   --volume /srv/docker/nginx/sites-enabled:/etc/nginx/sites-enabled \
-  sameersbn/nginx:1.10.1
+  sameersbn/nginx:1.10.1-1
 ```
 
 > **Note**: SELinux users should update the security context of the host mountpoints so that it plays nicely with Docker:
@@ -134,7 +134,7 @@ To upgrade to newer releases:
   1. Download the updated Docker image:
 
   ```bash
-  docker pull sameersbn/nginx:1.10.1
+  docker pull sameersbn/nginx:1.10.1-1
   ```
 
   2. Stop the currently running image:
@@ -154,7 +154,7 @@ To upgrade to newer releases:
   ```bash
   docker run -name nginx -d \
     [OPTIONS] \
-    sameersbn/nginx:1.10.1
+    sameersbn/nginx:1.10.1-1
   ```
 
 ## Shell Access

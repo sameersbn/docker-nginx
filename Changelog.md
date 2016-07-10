@@ -1,6 +1,6 @@
 # Changelog
 
-**latest**
+**1.10.1-1**
 - nginx-rtmp-module: upgrade to v1.1.8
 - libav: upgrade to v 1.7
 
