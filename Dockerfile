@@ -1,7 +1,7 @@
 FROM sameersbn/ubuntu:14.04.20160727
 MAINTAINER sameer@damagehead.com
 
-ENV RTMP_VERSION=1.1.8 \
+ENV RTMP_VERSION=1.1.9 \
     NPS_VERSION=1.11.33.2 \
     LIBAV_VERSION=11.7 \
     NGINX_VERSION=1.10.1 \
