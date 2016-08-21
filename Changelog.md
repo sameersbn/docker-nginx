@@ -1,6 +1,6 @@
 # Changelog
 
-**latest**
+**1.10.1-4**
 - nginx-rtmp-module: upgrade to v1.1.9
 
 **1.10.1-1**
