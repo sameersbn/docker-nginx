@@ -1,15 +1,12 @@
 machine:
   services:
     - docker
+
 dependencies:
-  cache_directories:
-    - "~/docker-nginx"
   override:
     - docker info
-    - if [[ -e ~/docker-nginx/image.tar ]]; then docker load --input ~/docker-nginx/image.tar; fi
-    - docker build -t sameersbn/nginx .
-    - mkdir -p ~/docker-nginx; docker save --output ~/docker-nginx/image.tar sameersbn/nginx
 test:
   override:
+    - docker build -t sameersbn/nginx .
     - docker run -d -p 28088:80 sameersbn/nginx; sleep 10
     - curl --retry 10 --retry-delay 5 -v http://127.0.0.1:28088
