@@ -2,7 +2,7 @@ FROM sameersbn/ubuntu:14.04.20161014
 MAINTAINER sameer@damagehead.com
 
 ENV RTMP_VERSION=1.1.10 \
-    NPS_VERSION=1.11.33.2 \
+    NPS_VERSION=1.11.33.4 \
     LIBAV_VERSION=11.7 \
     NGINX_VERSION=1.10.1 \
     NGINX_USER=www-data \
