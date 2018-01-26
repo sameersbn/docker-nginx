@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+[[ $DEBUG == true ]] && set -x
+
 create_log_dir() {
   mkdir -p ${NGINX_LOG_DIR}
   chmod -R 0755 ${NGINX_LOG_DIR}
