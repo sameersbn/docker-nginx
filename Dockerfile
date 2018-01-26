@@ -1,10 +1,10 @@
-FROM sameersbn/ubuntu:14.04.20170123
+FROM sameersbn/ubuntu:16.04.20180124
 MAINTAINER sameer@damagehead.com
 
-ENV RTMP_VERSION=1.1.10 \
+ENV RTMP_VERSION=1.2.1 \
     NPS_VERSION=1.11.33.4 \
-    LIBAV_VERSION=12 \
-    NGINX_VERSION=1.10.3 \
+    LIBAV_VERSION=12.2 \
+    NGINX_VERSION=1.12.2 \
     NGINX_USER=www-data \
     NGINX_SITECONF_DIR=/etc/nginx/sites-enabled \
     NGINX_LOG_DIR=/var/log/nginx \
