@@ -37,7 +37,7 @@ ${WITH_RTMP} && {
 }
 
 apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y ${RUNTIME_DEPENDENCIES} ${BUILD_DEPENDENCIES}
+DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y ${RUNTIME_DEPENDENCIES} ${BUILD_DEPENDENCIES}
 
 # enable debug support
 ${WITH_DEBUG} && {
