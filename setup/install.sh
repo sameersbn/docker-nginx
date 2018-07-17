@@ -8,7 +8,7 @@ PSOL_DOWNLOAD_URL="https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.g
 LIBAV_DOWNLOAD_URL="https://libav.org/releases/libav-${LIBAV_VERSION}.tar.gz"
 
 RUNTIME_DEPENDENCIES="libssl1.0.0 libxslt1.1 libpcre++ libgd3 libxpm4 libgeoip1"
-BUILD_DEPENDENCIES="wget make gcc g++ libssl-dev libxslt-dev libpcre++-dev libgd2-xpm-dev libgeoip-dev"
+BUILD_DEPENDENCIES="wget make gcc g++ libssl-dev libxslt-dev libpcre++-dev libgd-dev libgeoip-dev"
 
 download_and_extract() {
   src=${1}
@@ -29,11 +29,10 @@ download_and_extract() {
 
 ${WITH_RTMP} && {
   ${BUILD_LIBAV} && {
-    echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" >> /etc/apt/sources.list
-    RUNTIME_DEPENDENCIES="$RUNTIME_DEPENDENCIES libfdk-aac0 libx264-142"
+    RUNTIME_DEPENDENCIES="$RUNTIME_DEPENDENCIES libfdk-aac1 libx264-152"
     BUILD_DEPENDENCIES="$BUILD_DEPENDENCIES yasm libfdk-aac-dev libx264-dev"
   } || {
-    RUNTIME_DEPENDENCIES="$RUNTIME_DEPENDENCIES libav-tools"
+    RUNTIME_DEPENDENCIES="$RUNTIME_DEPENDENCIES ffmpeg"
   }
 }
 
