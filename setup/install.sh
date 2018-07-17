@@ -8,7 +8,7 @@ PSOL_DOWNLOAD_URL="https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.g
 LIBAV_DOWNLOAD_URL="https://libav.org/releases/libav-${LIBAV_VERSION}.tar.gz"
 
 RUNTIME_DEPENDENCIES="libssl1.0.0 libxslt1.1 libpcre++ libgd3 libxpm4 libgeoip1"
-BUILD_DEPENDENCIES="make gcc g++ libssl-dev libxslt-dev libpcre++-dev libgd2-xpm-dev libgeoip-dev"
+BUILD_DEPENDENCIES="wget make gcc g++ libssl-dev libxslt-dev libpcre++-dev libgd2-xpm-dev libgeoip-dev"
 
 download_and_extract() {
   src=${1}
@@ -27,18 +27,28 @@ download_and_extract() {
   rm -rf ${NGINX_SETUP_DIR}/sources/${tarball}
 }
 
+${WITH_RTMP} && {
+  ${BUILD_LIBAV} && {
+    echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" >> /etc/apt/sources.list
+    RUNTIME_DEPENDENCIES="$RUNTIME_DEPENDENCIES libfdk-aac0 libx264-142"
+    BUILD_DEPENDENCIES="$BUILD_DEPENDENCIES yasm libfdk-aac-dev libx264-dev"
+  } || {
+    RUNTIME_DEPENDENCIES="$RUNTIME_DEPENDENCIES libav-tools"
+  }
+}
+
+apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get install -y ${RUNTIME_DEPENDENCIES} ${BUILD_DEPENDENCIES}
+
+# enable debug support
+${WITH_DEBUG} && {
+  EXTRA_ARGS="${EXTRA_ARGS} --with-debug"
+}
+
 # prepare rtmp module support
 ${WITH_RTMP} && {
   EXTRA_ARGS="${EXTRA_ARGS} --add-module=${NGINX_SETUP_DIR}/nginx-rtmp-module"
   download_and_extract "${NGINX_RTMP_MODULE_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/nginx-rtmp-module"
-  ${BUILD_LIBAV} && {
-    echo "deb http://archive.ubuntu.com/ubuntu/ trusty multiverse" >> /etc/apt/sources.list
-    RUNTIME_DEPENDENCIES="$RUNTIME_DEPENDENCIES libfdk-aac0 libx264-142"
-    BUILD_DEPENDENCIES="$BUILD_DEPENDENCIES yasm libfdk-aac-dev libx264-dev"
-    download_and_extract "${LIBAV_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/libav"
-  } || {
-    RUNTIME_DEPENDENCIES="$RUNTIME_DEPENDENCIES libav-tools"
-  }
 }
 
 # prepare pagespeed module support
@@ -48,16 +58,9 @@ ${WITH_PAGESPEED} && {
   download_and_extract "${PSOL_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/ngx_pagespeed/psol"
 }
 
-# enable debug support
-${WITH_DEBUG} && {
-  EXTRA_ARGS="${EXTRA_ARGS} --with-debug"
-}
-
-apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y ${RUNTIME_DEPENDENCIES} ${BUILD_DEPENDENCIES}
-
 # build libav
 ${WITH_RTMP} && ${BUILD_LIBAV} && {
+  download_and_extract "${LIBAV_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/libav"
   cd ${NGINX_SETUP_DIR}/libav
   ./configure \
     --prefix=/usr \
@@ -74,7 +77,6 @@ ${WITH_RTMP} && ${BUILD_LIBAV} && {
 # build nginx with modules enabled at build time
 download_and_extract "${NGINX_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/nginx"
 cd ${NGINX_SETUP_DIR}/nginx
-
 ./configure \
   --prefix=/usr/share/nginx \
   --conf-path=/etc/nginx/nginx.conf \
