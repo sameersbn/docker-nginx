@@ -8,23 +8,23 @@ PSOL_DOWNLOAD_URL="https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.g
 LIBAV_DOWNLOAD_URL="https://libav.org/releases/libav-${LIBAV_VERSION}.tar.gz"
 
 RUNTIME_DEPENDENCIES="libssl1.0.0 libxslt1.1 libpcre++ libgd3 libxpm4 libgeoip1"
-BUILD_DEPENDENCIES="wget make gcc g++ libssl-dev libxslt-dev libpcre++-dev libgd-dev libgeoip-dev"
+BUILD_DEPENDENCIES="wget ca-certificates make gcc g++ libssl-dev libxslt-dev libpcre++-dev libgd-dev libgeoip-dev"
 
 download_and_extract() {
   src=${1}
   dest=${2}
   tarball=$(basename ${src})
 
-  if [ ! -f ${NGINX_SETUP_DIR}/sources/${tarball} ]; then
+  if [ ! -f ${NGINX_BUILD_DIR}/${tarball} ]; then
     echo "Downloading ${tarball}..."
-    mkdir -p ${NGINX_SETUP_DIR}/sources/
-    wget ${src} -O ${NGINX_SETUP_DIR}/sources/${tarball}
+    mkdir -p ${NGINX_BUILD_DIR}/
+    wget ${src} -O ${NGINX_BUILD_DIR}/${tarball}
   fi
 
   echo "Extracting ${tarball}..."
   mkdir ${dest}
-  tar -zxf ${NGINX_SETUP_DIR}/sources/${tarball} --strip=1 -C ${dest}
-  rm -rf ${NGINX_SETUP_DIR}/sources/${tarball}
+  tar -zxf ${NGINX_BUILD_DIR}/${tarball} --strip=1 -C ${dest}
+  rm -rf ${NGINX_BUILD_DIR}/${tarball}
 }
 
 ${WITH_RTMP} && {
@@ -46,21 +46,21 @@ ${WITH_DEBUG} && {
 
 # prepare rtmp module support
 ${WITH_RTMP} && {
-  EXTRA_ARGS="${EXTRA_ARGS} --add-module=${NGINX_SETUP_DIR}/nginx-rtmp-module"
-  download_and_extract "${NGINX_RTMP_MODULE_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/nginx-rtmp-module"
+  EXTRA_ARGS="${EXTRA_ARGS} --add-module=${NGINX_BUILD_DIR}/nginx-rtmp-module"
+  download_and_extract "${NGINX_RTMP_MODULE_DOWNLOAD_URL}" "${NGINX_BUILD_DIR}/nginx-rtmp-module"
 }
 
 # prepare pagespeed module support
 ${WITH_PAGESPEED} && {
-  EXTRA_ARGS="${EXTRA_ARGS} --add-module=${NGINX_SETUP_DIR}/ngx_pagespeed"
-  download_and_extract "${NGX_PAGESPEED_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/ngx_pagespeed"
-  download_and_extract "${PSOL_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/ngx_pagespeed/psol"
+  EXTRA_ARGS="${EXTRA_ARGS} --add-module=${NGINX_BUILD_DIR}/ngx_pagespeed"
+  download_and_extract "${NGX_PAGESPEED_DOWNLOAD_URL}" "${NGINX_BUILD_DIR}/ngx_pagespeed"
+  download_and_extract "${PSOL_DOWNLOAD_URL}" "${NGINX_BUILD_DIR}/ngx_pagespeed/psol"
 }
 
 # build libav
 ${WITH_RTMP} && ${BUILD_LIBAV} && {
-  download_and_extract "${LIBAV_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/libav"
-  cd ${NGINX_SETUP_DIR}/libav
+  download_and_extract "${LIBAV_DOWNLOAD_URL}" "${NGINX_BUILD_DIR}/libav"
+  cd ${NGINX_BUILD_DIR}/libav
   ./configure \
     --prefix=/usr \
     --disable-debug \
@@ -74,8 +74,8 @@ ${WITH_RTMP} && ${BUILD_LIBAV} && {
 }
 
 # build nginx with modules enabled at build time
-download_and_extract "${NGINX_DOWNLOAD_URL}" "${NGINX_SETUP_DIR}/nginx"
-cd ${NGINX_SETUP_DIR}/nginx
+download_and_extract "${NGINX_DOWNLOAD_URL}" "${NGINX_BUILD_DIR}/nginx"
+cd ${NGINX_BUILD_DIR}/nginx
 ./configure \
   --prefix=/usr/share/nginx \
   --conf-path=/etc/nginx/nginx.conf \
@@ -115,7 +115,7 @@ make -j$(nproc) && make install
 
 # copy rtmp stats template
 ${WITH_RTMP} && {
-  cp ${NGINX_SETUP_DIR}/nginx-rtmp-module/stat.xsl /usr/share/nginx/html/
+  cp ${NGINX_BUILD_DIR}/nginx-rtmp-module/stat.xsl /usr/share/nginx/html/
 }
 
 # create default configuration
@@ -155,5 +155,5 @@ EOF
 
 # cleanup
 apt-get purge -y --auto-remove ${BUILD_DEPENDENCIES}
-rm -rf ${NGINX_SETUP_DIR}/{nginx,nginx-rtmp-module,ngx_pagespeed,libav}
+rm -rf ${NGINX_BUILD_DIR}/{nginx,nginx-rtmp-module,ngx_pagespeed,libav}
 rm -rf /var/lib/apt/lists/*

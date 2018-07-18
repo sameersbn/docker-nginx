@@ -10,7 +10,7 @@ ENV RTMP_VERSION=1.2.1 \
     NGINX_SITECONF_DIR=/etc/nginx/sites-enabled \
     NGINX_LOG_DIR=/var/log/nginx \
     NGINX_TEMP_DIR=/var/lib/nginx \
-    NGINX_SETUP_DIR=/var/cache/nginx
+    NGINX_BUILD_DIR=/var/cache/nginx
 
 ARG BUILD_LIBAV=false
 
@@ -20,11 +20,11 @@ ARG WITH_PAGESPEED=true
 
 ARG WITH_RTMP=true
 
-COPY setup/ ${NGINX_SETUP_DIR}/
+COPY assets/build/ ${NGINX_BUILD_DIR}/
 
-RUN bash ${NGINX_SETUP_DIR}/install.sh
+RUN bash ${NGINX_BUILD_DIR}/install.sh
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY assets/config/nginx.conf /etc/nginx/nginx.conf
 
 COPY entrypoint.sh /sbin/entrypoint.sh
 
