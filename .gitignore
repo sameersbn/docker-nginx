@@ -1,2 +1,2 @@
-setup/sources/
-.idea
+*.tar.gz
+*.tar.bz2
