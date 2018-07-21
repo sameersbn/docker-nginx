@@ -6,8 +6,8 @@ ENV RTMP_VERSION=1.2.1 \
     X264_VERSION=snapshot-20180720-2245-stable \
     LIBAV_VERSION=12.3 \
     NGINX_VERSION=1.15.1 \
-    NGINX_BUILD_ASSETS_DIR=/etc/docker-nginx/build \
-    NGINX_BUILD_ROOT_DIR=/etc/docker-nginx/build/rootfs
+    NGINX_BUILD_ASSETS_DIR=/var/lib/docker-nginx \
+    NGINX_BUILD_ROOT_DIR=/var/lib/docker-nginx/rootfs
 
 ARG WITH_DEBUG=false
 
@@ -39,7 +39,7 @@ RUN apt-get update \
       libssl1.1 libxslt1.1 libgd3 libgeoip1 libfdk-aac1 \
  && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /etc/docker-nginx/build/rootfs /
+COPY --from=builder /var/lib/docker-nginx/rootfs /
 
 COPY assets/config/nginx.conf /etc/nginx/nginx.conf
 
