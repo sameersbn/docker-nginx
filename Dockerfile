@@ -25,6 +25,10 @@ RUN chmod +x ${NGINX_BUILD_ASSETS_DIR}/install.sh
 
 RUN ${NGINX_BUILD_ASSETS_DIR}/install.sh
 
+COPY entrypoint.sh ${NGINX_BUILD_ROOT_DIR}/sbin/entrypoint.sh
+
+RUN chmod 755 ${NGINX_BUILD_ROOT_DIR}/sbin/entrypoint.sh
+
 FROM ubuntu:bionic-20180526
 
 LABEL maintainer="sameer@damagehead.com"
@@ -40,12 +44,6 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /var/lib/docker-nginx/rootfs /
-
-COPY assets/config/nginx.conf /etc/nginx/nginx.conf
-
-COPY entrypoint.sh /sbin/entrypoint.sh
-
-RUN chmod 755 /sbin/entrypoint.sh
 
 EXPOSE 80/tcp 443/tcp 1935/tcp
 

@@ -1,0 +1,30 @@
+server {
+  listen 80 default_server;
+  listen [::]:80 default_server ipv6only=on;
+  server_name localhost;
+
+  root /usr/share/nginx/html;
+  index index.html index.htm;
+
+  location / {
+    try_files \$uri \$uri/ =404;
+  }
+
+  location /stat {
+    rtmp_stat all;
+    rtmp_stat_stylesheet stat.xsl;
+  }
+
+  location /stat.xsl {
+    root html;
+  }
+
+  location /control {
+    rtmp_control all;
+  }
+
+  error_page  500 502 503 504 /50x.html;
+    location = /50x.html {
+    root html;
+  }
+}

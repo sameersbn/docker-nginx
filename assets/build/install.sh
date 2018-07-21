@@ -120,45 +120,33 @@ install_packages libpcre++-dev libssl-dev zlib1g-dev libxslt1-dev libgd-dev libg
 make -j$(nproc)
 make DESTDIR=${NGINX_BUILD_ROOT_DIR} install
 
-# copy rtmp stats template
+# install default configuration
+mkdir -p ${NGINX_BUILD_ROOT_DIR}/etc/nginx/sites-enabled
+cp ${NGINX_BUILD_ASSETS_DIR}/config/nginx.conf ${NGINX_BUILD_ROOT_DIR}/etc/nginx/nginx.conf
+cp ${NGINX_BUILD_ASSETS_DIR}/config/sites-enabled/default ${NGINX_BUILD_ROOT_DIR}/etc/nginx/sites-enabled/default
+
 ${WITH_RTMP} && {
   cp ${NGINX_BUILD_ASSETS_DIR}/nginx-rtmp-module/stat.xsl ${NGINX_BUILD_ROOT_DIR}/usr/share/nginx/html/
-}
-
-# create default configuration
-mkdir -p ${NGINX_BUILD_ROOT_DIR}/etc/nginx/sites-enabled
-cat > ${NGINX_BUILD_ROOT_DIR}/etc/nginx/sites-enabled/default <<EOF
-server {
-  listen 80 default_server;
-  listen [::]:80 default_server ipv6only=on;
-  server_name localhost;
-
-  root /usr/share/nginx/html;
-  index index.html index.htm;
-
-  location / {
-    try_files \$uri \$uri/ =404;
-  }
-
-  location /stat {
-    rtmp_stat all;
-    rtmp_stat_stylesheet stat.xsl;
-  }
-
-  location /stat.xsl {
-    root html;
-  }
-
-  location /control {
-    rtmp_control all;
-  }
-
-  error_page  500 502 503 504 /50x.html;
-    location = /50x.html {
-    root html;
+  cp ${NGINX_BUILD_ASSETS_DIR}/config/sites-enabled/default-rtmp ${NGINX_BUILD_ROOT_DIR}/etc/nginx/sites-enabled/default
+  cat >> ${NGINX_BUILD_ROOT_DIR}/etc/nginx/nginx.conf <<EOF
+rtmp {
+  server {
+    listen 1935;
+    application live {
+      live on;
+      allow publish 172.17.0.0/16;
+      allow play all;
+    }
   }
 }
 EOF
+}
+
+# disable page_speed module by default
+${WITH_PAGESPEED} && {
+  mkdir -p ${NGINX_BUILD_ROOT_DIR}/var/lib/nginx/ngx_pagespeed
+  sed -i 's/# pagespeed /pagespeed /g' ${NGINX_BUILD_ROOT_DIR}/etc/nginx/nginx.conf
+}
 
 strip_debug "${NGINX_BUILD_ROOT_DIR}/usr/bin/" "*"
 strip_debug "${NGINX_BUILD_ROOT_DIR}/usr/sbin/" "*"
