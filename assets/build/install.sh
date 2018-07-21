@@ -32,7 +32,6 @@ strip_debug() {
 }
 
 ${WITH_RTMP} && {
-  # download_and_extract "https://sourceforge.net/projects/opencore-amr/files/fdk-aac/fdk-aac-${FDK_AAC_VERSION}.tar.gz" "${NGINX_BUILD_ASSETS_DIR}/fdk-aac"
   download_and_extract "http://prdownloads.sourceforge.net/opencore-amr/fdk-aac-${FDK_AAC_VERSION}.tar.gz" "${NGINX_BUILD_ASSETS_DIR}/fdk-aac"
   cd ${NGINX_BUILD_ASSETS_DIR}/fdk-aac
   ./configure \
@@ -44,7 +43,7 @@ ${WITH_RTMP} && {
   make install
   make DESTDIR=${NGINX_BUILD_ROOT_DIR} install
 
-  install_packages yasm
+  install_packages nasm
   download_and_extract "http://ftp.videolan.org/pub/x264/snapshots/x264-${X264_VERSION}.tar.bz2" "${NGINX_BUILD_ASSETS_DIR}/x264"
   cd ${NGINX_BUILD_ASSETS_DIR}/x264
   ./configure \
@@ -74,14 +73,14 @@ ${WITH_RTMP} && {
 }
 
 ${WITH_PAGESPEED} && {
-  download_and_extract "https://github.com/apache/incubator-pagespeed-ngx/archive/v${NPS_VERSION}-beta.tar.gz" ${NGINX_BUILD_ASSETS_DIR}/ngx_pagespeed
-  download_and_extract "https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz" ${NGINX_BUILD_ASSETS_DIR}/ngx_pagespeed/psol
+  download_and_extract "https://github.com/apache/incubator-pagespeed-ngx/archive/v${NPS_VERSION}-stable.tar.gz" ${NGINX_BUILD_ASSETS_DIR}/ngx_pagespeed
+  download_and_extract "https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}-x64.tar.gz" ${NGINX_BUILD_ASSETS_DIR}/ngx_pagespeed/psol
   EXTRA_ARGS+=" --add-module=${NGINX_BUILD_ASSETS_DIR}/ngx_pagespeed"
 }
 
 download_and_extract "http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz" ${NGINX_BUILD_ASSETS_DIR}/nginx
 cd ${NGINX_BUILD_ASSETS_DIR}/nginx
-install_packages libpcre++-dev libssl-dev zlib1g-dev libxslt1-dev libgd-dev libgeoip-dev
+install_packages libpcre++-dev libssl-dev zlib1g-dev libxslt1-dev libgd-dev libgeoip-dev uuid-dev
 ./configure \
   --prefix=/usr/share/nginx \
   --sbin-path=/usr/sbin/nginx \
