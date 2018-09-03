@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: nginx
-      image: sameersbn/nginx:1.15.1-1
+      image: sameersbn/nginx:1.15.3
       ports:
         - containerPort: 80
           protocol: TCP
