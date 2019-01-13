@@ -1,5 +1,8 @@
 # Changelog
 
+**latest**
+- nginx: upgrade to 1.15.8
+
 **1.15.3**
 - nginx: upgrade to 1.15.3
 

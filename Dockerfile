@@ -5,7 +5,7 @@ ENV RTMP_VERSION=1.2.1 \
     FDK_AAC_VERSION=0.1.6 \
     X264_VERSION=snapshot-20180720-2245-stable \
     LIBAV_VERSION=12.3 \
-    NGINX_VERSION=1.15.4 \
+    NGINX_VERSION=1.15.8 \
     NGINX_BUILD_ASSETS_DIR=/var/lib/docker-nginx \
     NGINX_BUILD_ROOT_DIR=/var/lib/docker-nginx/rootfs
 
