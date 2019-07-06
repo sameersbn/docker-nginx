@@ -1,4 +1,4 @@
-FROM ubuntu:bionic-20181204 AS builder
+FROM ubuntu:bionic-20190612 AS builder
 
 ENV RTMP_VERSION=1.2.1 \
     NPS_VERSION=1.13.35.2  \
@@ -29,7 +29,7 @@ COPY entrypoint.sh ${NGINX_BUILD_ROOT_DIR}/sbin/entrypoint.sh
 
 RUN chmod 755 ${NGINX_BUILD_ROOT_DIR}/sbin/entrypoint.sh
 
-FROM ubuntu:bionic-20181204
+FROM ubuntu:bionic-20190612
 
 LABEL maintainer="sameer@damagehead.com"
 
